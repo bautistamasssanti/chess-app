@@ -13,8 +13,8 @@ public class Board {
     private final int length;
     public Board(Map<Tile, Piece> board, int width, int length){
         this.board = board;
-        this.width = width;
-        this.length = length;
+        this.width = width;//eje x
+        this.length = length;//eje y
     }
     public Map<Tile, Piece> getBoard() {
         return board;

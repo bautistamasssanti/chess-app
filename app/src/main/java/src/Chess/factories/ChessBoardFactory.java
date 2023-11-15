@@ -4,7 +4,7 @@ import src.logic.TeamColor;
 import src.logic.Tile;
 import src.logic.board.Board;
 import src.logic.piece.Piece;
-import src.Chess.Piece.ChessPieceFactory;
+import src.Chess.piece.ChessPieceFactory;
 
 import java.util.HashMap;
 import java.util.Map;

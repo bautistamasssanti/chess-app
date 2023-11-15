@@ -1,4 +1,4 @@
-package src.Chess.Piece;
+package src.Chess.piece;
 
 import src.logic.TeamColor;
 import src.logic.moveRules.MoveRule;

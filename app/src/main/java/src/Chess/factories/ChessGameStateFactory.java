@@ -6,7 +6,7 @@ import src.logic.board.Board;
 import src.logic.gameState.GameState;
 import src.logic.moveRules.MoveType;
 import src.logic.piece.Piece;
-import src.Chess.Piece.ChessPieceFactory;
+import src.Chess.piece.ChessPieceFactory;
 import src.logic.piece.PieceType;
 
 import java.util.ArrayList;

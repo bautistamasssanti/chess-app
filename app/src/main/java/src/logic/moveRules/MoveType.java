@@ -5,4 +5,6 @@ public enum MoveType {
     BASIC,
     CASTLED_KINGSIDE,
     CASTLED_QUEENSIDE,
+    JUMP,
+    MULTI_JUMP,
 }
