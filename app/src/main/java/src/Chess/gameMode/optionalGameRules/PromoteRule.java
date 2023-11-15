@@ -26,11 +26,18 @@ public class PromoteRule implements OptionalGameRule {
         for (Tile occupiedTile : occupiedTiles) {
             Piece piece = currentStates.get(currentStates.size() - 1).getBoard().getBoard().get(occupiedTile);
             if (piece.getType() == transformFrom) {
-                if (occupiedTile.getY() == 0 || occupiedTile.getY() == currentStates.get(currentStates.size() - 1).getBoard().getLength() - 1) {
+                if (hasPieceReachedOtherSide(occupiedTile, currentStates)) {
                     currentStates = gameStateFactory.promotePiece(occupiedTile, currentStates, transformTo);
                 }
             }
         }
         return currentStates;
+    }
+    private boolean hasPieceReachedOtherSide(Tile toAnalize, List<GameState> gameStates){
+        if(gameStates.get(gameStates.size()-1).getBoard().getBoard().get(toAnalize).getColor() == gameStates.get(0).getTeamAPlayer().getColor()){
+            return toAnalize.getY() == gameStates.get(gameStates.size() - 1).getBoard().getLength() - 1;
+        } else{
+            return toAnalize.getY() == 0;
+        }
     }
 }

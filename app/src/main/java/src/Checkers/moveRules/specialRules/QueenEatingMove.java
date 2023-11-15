@@ -37,13 +37,12 @@ public class QueenEatingMove implements MoveRule {
     }
     private Tile getTileThatShouldBeOccupied(Tile origin, Tile destination) {
         if (arithmethicOperation.getXMovement(origin, destination) > 0 && arithmethicOperation.getYMovement(origin, destination) > 0) {
-            return new Tile(origin.getX() - 1, origin.getY() - 1);
+            return new Tile(destination.getX() - 1, destination.getY() - 1);
         } else if (arithmethicOperation.getXMovement(origin, destination) > 0 && arithmethicOperation.getYMovement(origin, destination) < 0) {
-            return new Tile(origin.getX() - 1, origin.getY() + 1);
+            return new Tile(destination.getX() - 1, destination.getY() + 1);
         } else if (arithmethicOperation.getXMovement(origin, destination) < 0 && arithmethicOperation.getYMovement(origin, destination) > 0) {
-            return new Tile(origin.getX() + 1, origin.getY() - 1);
-        } else return new Tile(origin.getX() + 1, origin.getY() + 1);
-
+            return new Tile(destination.getX() + 1, destination.getY() - 1);
+        } else return new Tile(destination.getX() + 1, destination.getY() + 1);
     }
     private List<Tile> getPossibleAttackTiles(Tile destination, List<GameState> gameStates){
         List<Tile> possibleAttackTiles = new ArrayList<>();
@@ -65,10 +64,19 @@ public class QueenEatingMove implements MoveRule {
     }
     private boolean arePossibleAttacks(Tile origin, List<Tile> possibleDestinations, List<GameState> gameStates){
         for(Tile possibleDestination : possibleDestinations){
-            if(isValidMove(origin, possibleDestination, gameStates) != MoveType.INVALID){
+            if(arePossibleAttacksHelper(origin, possibleDestination, gameStates) != MoveType.INVALID){
                 return true;
             }
         }
         return false;
+    }
+    private MoveType arePossibleAttacksHelper(Tile origin, Tile destination, List<GameState> gameStates){
+        if(isDiagonalMove.isValidMove(origin, destination, gameStates) == MoveType.INVALID) return MoveType.INVALID;
+        if(isMovingInYAxisByMinNTiles.isValidMove(origin, destination, gameStates) == MoveType.INVALID) return MoveType.INVALID;
+        Tile tileThatShouldBeOccupied = getTileThatShouldBeOccupied(origin, destination);
+        if(isDiagonalPathFreeToCross.isValidMove(origin, tileThatShouldBeOccupied, gameStates) == MoveType.INVALID) return MoveType.INVALID;
+        if(isDestinationTileFree.isValidMove(origin,tileThatShouldBeOccupied, gameStates) != MoveType.INVALID) return MoveType.INVALID;
+        if(isDestinationTileFree.isValidMove(origin, destination, gameStates) == MoveType.INVALID) return MoveType.INVALID;
+        return MoveType.JUMP;
     }
 }

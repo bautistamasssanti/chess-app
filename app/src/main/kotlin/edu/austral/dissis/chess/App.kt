@@ -11,6 +11,7 @@ import javafx.application.Application
 import javafx.application.Application.launch
 import javafx.scene.Scene
 import javafx.stage.Stage
+import src.Checkers.CheckersGameEngine
 import src.Chess.ChessGameEngine
 
 
@@ -19,7 +20,8 @@ fun main() {
 }
 
 class ChessGameApplication : Application() {
-    private val chessGameEngine = ChessGameEngine()
+    private val checkersGameEngine = CheckersGameEngine()
+    //private val chessGameEngine = ChessGameEngine()
     //private val gameEngine = SimpleGameEngine()
     private val imageResolver = CachedImageResolver(DefaultImageResolver())
 
@@ -30,7 +32,8 @@ class ChessGameApplication : Application() {
     override fun start(primaryStage: Stage) {
         primaryStage.title = GameTitle
 
-        val root = GameView(chessGameEngine, imageResolver)
+        val root = GameView(checkersGameEngine, imageResolver)
+        //val root = GameView(chessGameEngine, imageResolver)
         //val root = GameView(gameEngine, imageResolver)
         primaryStage.scene = Scene(root)
 

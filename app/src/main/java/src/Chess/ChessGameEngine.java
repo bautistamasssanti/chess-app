@@ -54,8 +54,7 @@ public class ChessGameEngine implements GameEngine {
     @Override
     public InitialState init() {
         Board gameBoard = new ChessBoardFactory().standardChessBoard();
-        GameState initialGameState = new GameState(gameBoard, GameStatus.InProgress, playerA, playerB, TeamColor.WHITE);
         gameStates = gameMode.getInitialState(gameBoard, playerA, playerB, TeamColor.WHITE);
-        return new InitialState(gameEngineAdapter.getBoardSize(gameBoard), gameEngineAdapter.getCurrentPieces(gameBoard), gameEngineAdapter.getCurrentTurn(initialGameState));
+        return new InitialState(gameEngineAdapter.getBoardSize(gameBoard), gameEngineAdapter.getCurrentPieces(gameBoard), gameEngineAdapter.getCurrentTurn(gameStates.get(0)));
     }
 }

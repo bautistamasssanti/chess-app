@@ -59,10 +59,23 @@ public class ManEatingMove implements MoveRule {
     }
     private boolean arePossibleAttacks(Tile origin, List<Tile> possibleDestinations, List<GameState> gameStates){
         for(Tile possibleDestination : possibleDestinations){
-            if(isValidMove(origin, possibleDestination, gameStates) != MoveType.INVALID){
+            if(arePossibleAttacksHelper(origin,possibleDestination,gameStates) != MoveType.INVALID){
                 return true;
             }
         }
         return false;
+    }
+    private MoveType arePossibleAttacksHelper(Tile origin, Tile destination, List<GameState> gameStates){
+        if (isMovingInYAxisByMaxNTiles.isValidMove(origin, destination,gameStates) == MoveType.INVALID)
+            return MoveType.INVALID;
+        if (isMovingInYAxisByMinNTiles.isValidMove(origin, destination,gameStates) == MoveType.INVALID)
+            return MoveType.INVALID;
+        if (isDiagonalMove.isValidMove(origin, destination,gameStates) == MoveType.INVALID)
+            return MoveType.INVALID;
+        if (isDestinationTileFree.isValidMove(origin, destination,gameStates) == MoveType.INVALID)
+            return MoveType.INVALID;
+        if (isDiagonalPathFreeToCross.isValidMove(origin, destination,gameStates) != MoveType.INVALID)
+            return MoveType.INVALID;
+        return MoveType.JUMP;
     }
 }
