@@ -1,0 +1,157 @@
+@startuml
+Class Board{
+Map<Tile, Piece> board
+int width
+int length
++Map<Tile,Piece> getBoard()
++List<Tile> getOccupiedTileFromPieceTypeAndColor(PieceType pieceType, TeamColor teamColor)
++List<Tile> getTeamTiles(TeamColor teamColor)
++List<Tile> getOccupiedTiles()
++Map<Tile, Piece> getBoardCopy()
++int getWidth()
++int getLength()
+}
+interface GameEngineAdapter{
+BoardSize getBoardSize(Board board)
+List<ChessPiece> getCurrentPieces(Board board)
+PlayerColor getCurrentTurn(GameState gameState)
+Position adaptPosition(Tile tile)
+PlayerColor adaptPlayerColor(TeamColor teamColor)
+String adaptPieceType(PieceType pieceType)
+List<Tile> adaptTiles(Move move)
+}
+interface DrawCondition{
+boolean isGameADraw(List<GameState> gameStates)
+}
+Class EndGameFactory{
++List<GameState> victoryFactory(Player player, List<GameState> gameStates)
++List<GameState> drawFactory(List<GameState> gameStates)
+}
+interface GameMode{
+boolean isGameADraw(List<GameState> gameStates)
+boolean isGameWonByPlayer(Player player, List<GameState> gameStates)
+List<GameState> isBoardStateValid(List<GameState> gameStates)
+List<GameState> getInitialState(Board board, Player teamAPlayer, Player teamBPlayer, TeamColor initialTurn)
+}
+Class GameModeImplementation{
+WinCondition[] winConditions
+DrawCondition[] drawConditions
+GameRule[] gameRules
+OptionalGameRule[] optionalGameRules
++GameModeImplementation(WinCondition[] winConditions, DrawCondition[] drawConditions, GameRule[] gameRules, OptionalGameRule[] optionalGameRules)
++boolean isGameADraw(List<GameState> gameStates)
++boolean isGameWonByPlayer(Player player, List<GameState> gameStates)
++List<GameState> isBoardStateValid(List<GameState> gameStates)
+List<GameState> getInitialState(Board board, Player teamAPlayer, Player teamBPlayer, TeamColor initialTurn)
+-List<GameState> getGameStateToCheck(List<GameState> initialState)
+}
+interface GameRule{
+boolean isGameRuleValid(List<GameState> gameStates)
+String getGameRuleName()
+}
+interface OptionalGameRule{
+List<GameState> isOptionalConditionulfilled(List<GameState> gameStates)
+}
+interface WinCondition{
+boolean isGameWonByPlayer(Player player, List<GameState> gameStates)
+}
+Class GameState{
+Board board
+GameStatus gameStatus
+Player teamAPlayer
+Player teamBPlayer
+TeamColor colorTurn
++GameState(Board board, GameStatus gameStatus, Player teamAPlayer, Player teamBPlayer, TeamColor colorTurn)
++Board getBoard()
+Player getTeamAPlayer()
++Player getTeamBPlayer()
++TeamColor getColorTurn()
++TeamColor getColorInNextTurn()
++Player getCurrentTurnPlayer()
++GameStatus getGameStatus()
+}
+enum GameStatus{
+TeamAWon
+TeamBWon
+Draw
+InProgress
+}
+Class ComposedMoveRule{
+MoveRule[] moveRules
++ComposedMoveRule(MoveRule[] moveRules)
++MoveType isValidMove(Tile origin, Tile destination, List<GameState> gameStates)
+}
+interface MoveRule{
+MoveType isValidMove(Tile origin, Tile destination, List<GameState> gameStates)
+}
+enum MoveType{
+INVALID
+BASIC
+CASTLED_KINGSIDE
+CASTLED_QUEENSIDE
+JUMP
+MULTI_JUMP
+}
+Class Piece{
+int id
+PieceType type
+TeamColor color
+MoveRule[] moveRules
++Piece(PieceType type, TeamColor color, MoveRule[] moveRules, int id)
++int getId()
+PieceType getType()
+TeamColor getColor()
+MoveRule[] getMoveRules()
+}
+enum PieceType{
+PAWN
+ROOK
+KNIGHT
+BISHOP
+QUEEN
+KING
+MAN
+}
+interface TurnController{
+List<GameState> applyMove(Player player, Tile origin, Tile destination, List<GameState> gameStates)
+}
+Class Player{
+TeamColor color
++Player(TeamColor color)
++TeamColor getColor()
++MoveType CanMovePiece(Tile from, Tile to, List<GameState> gameStates)
+-boolean isTileInBoard(Tile tile, int BoardWidth, int BoardLength)
+}
+enum TeamColor{
+BLACK
+WHITE
+}
+Class Tile{
+int x
+int y
++Tile(int x, int y)
++int hashCode()
++boolean equals(Object obj)
++int getX()
++int getY()
+}
+
+
+Tile o--> Board
+Piece o--> Board
+Board *--> GameState
+GameStatus *--> GameState
+Player *--> GameState
+TeamColor *--> GameState
+PieceType *-> Piece
+TeamColor *--> Piece
+MoveRule *--> Piece
+TeamColor *--> Player
+ComposedMoveRule ..|> MoveRule
+MoveRule o--> ComposedMoveRule
+WinCondition o--> GameModeImplementation
+DrawCondition o--> GameModeImplementation
+OptionalGameRule o--> GameModeImplementation
+GameRule o--> GameModeImplementation
+GameModeImplementation ..|> GameMode
+@enduml
