@@ -3,16 +3,14 @@
  */
 package edu.austral.dissis.chess
 
-import edu.austral.dissis.chess.gui.CachedImageResolver
-import edu.austral.dissis.chess.gui.DefaultImageResolver
-import edu.austral.dissis.chess.gui.GameView
-import edu.austral.dissis.chess.gui.SimpleGameEngine
+import edu.austral.dissis.chess.gui.*
 import javafx.application.Application
 import javafx.application.Application.launch
 import javafx.scene.Scene
 import javafx.stage.Stage
-import src.Checkers.CheckersGameEngine
 import src.Chess.ChessGameEngine
+import src.InternationalCheckers.InternationalCheckersGameEngine
+import src.StandardCheckers.StandardCheckersGameEngine
 
 
 fun main() {
@@ -20,9 +18,10 @@ fun main() {
 }
 
 class ChessGameApplication : Application() {
-    private val checkersGameEngine = CheckersGameEngine()
-    //private val chessGameEngine = ChessGameEngine()
-    //private val gameEngine = SimpleGameEngine()
+    private val internationalCheckersGameEngine = InternationalCheckersGameEngine()
+    private val StandardCheckersGameEngine = StandardCheckersGameEngine()
+    private val chessGameEngine = ChessGameEngine()
+    private val gameEngine = SimpleGameEngine()
     private val imageResolver = CachedImageResolver(DefaultImageResolver())
 
     companion object {
@@ -32,7 +31,8 @@ class ChessGameApplication : Application() {
     override fun start(primaryStage: Stage) {
         primaryStage.title = GameTitle
 
-        val root = GameView(checkersGameEngine, imageResolver)
+        //val root = createGameViewFrom(internationalCheckersGameEngine, imageResolver)
+        val root = createGameViewFrom(StandardCheckersGameEngine, imageResolver)
         //val root = GameView(chessGameEngine, imageResolver)
         //val root = GameView(gameEngine, imageResolver)
         primaryStage.scene = Scene(root)
