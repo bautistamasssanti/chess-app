@@ -28,7 +28,7 @@ public class CheckersGameStateFactory {
         Board newBoardObject = new Board(newBoard, originalGameState.getBoard().getWidth(), originalGameState.getBoard().getLength());
         GameState newGameState = new GameState(newBoardObject, originalGameState.getGameStatus(), originalGameState.getTeamAPlayer(), originalGameState.getTeamBPlayer(), originalGameState.getColorTurn());
         newHistory.add(newHistory.size(), newGameState);
-        return newHistory;
+        return Collections.unmodifiableList(newHistory);
     }
     public List<GameState> switchTurn(List<GameState> gameStates, TeamColor colorToSwitch){
         GameState newGameState = new GameState(gameStates.get(gameStates.size() - 1).getBoard(), gameStates.get(gameStates.size() - 1).getGameStatus(), gameStates.get(gameStates.size() - 1).getTeamAPlayer(), gameStates.get(gameStates.size() - 1).getTeamBPlayer(), colorToSwitch);

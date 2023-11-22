@@ -10,6 +10,7 @@ import src.Chess.piece.ChessPieceFactory;
 import src.logic.piece.PieceType;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -25,13 +26,13 @@ public class ChessGameStateFactory {
         Board newBoardObject = new Board(newBoard, originalGameState.getBoard().getWidth(), originalGameState.getBoard().getLength());
         GameState newGameState = new GameState(newBoardObject, originalGameState.getGameStatus(), originalGameState.getTeamAPlayer(), originalGameState.getTeamBPlayer(), originalGameState.getColorTurn());
         newHistory.add(newHistory.size(), newGameState);
-        return newHistory;
+        return Collections.unmodifiableList(newHistory);
     }
     public List<GameState> changeTurnColor(TeamColor colorTurn, List<GameState> gameStates){
         List<GameState> newHistory = new ArrayList<>(gameStates.subList(0, gameStates.size() - 1)) ;
         GameState newGameState = new GameState(gameStates.get(gameStates.size() - 1).getBoard(), gameStates.get(gameStates.size() - 1).getGameStatus(), gameStates.get(gameStates.size() - 1).getTeamAPlayer(), gameStates.get(gameStates.size() - 1).getTeamBPlayer(), colorTurn);
         newHistory.add(newHistory.size(), newGameState);
-        return newHistory;
+        return Collections.unmodifiableList(newHistory);
     }
     public List<GameState> movePiece(MoveType type, Tile originalTile, Tile targetTile, List<GameState> gameStates){
         return switch (type) {
@@ -50,7 +51,7 @@ public class ChessGameStateFactory {
         GameState newGameState = new GameState(newBoardObject, gameStates.get(gameStates.size() - 1).getGameStatus(), gameStates.get(gameStates.size() - 1).getTeamAPlayer(), gameStates.get(gameStates.size() - 1).getTeamBPlayer(), gameStates.get(gameStates.size() - 1).getColorInNextTurn());
         List<GameState> newHistory = new ArrayList<>(gameStates);
         newHistory.add(newGameState);
-        return newHistory;
+        return Collections.unmodifiableList(newHistory);
     }
     private List<GameState> castledKingSide(Tile originalTile, Tile destinationTile, List<GameState> gameStates){
         Map<Tile, Piece> newBoard = gameStates.get(gameStates.size() - 1).getBoard().getBoardCopy();
@@ -65,7 +66,7 @@ public class ChessGameStateFactory {
         GameState newGameState = new GameState(newBoardObject, gameStates.get(gameStates.size() - 1).getGameStatus(), gameStates.get(gameStates.size() - 1).getTeamAPlayer(), gameStates.get(gameStates.size() - 1).getTeamBPlayer(), gameStates.get(gameStates.size() - 1).getColorInNextTurn());
         List<GameState> newHistory = new ArrayList<>(gameStates);
         newHistory.add(newGameState);
-        return newHistory;
+        return Collections.unmodifiableList(newHistory);
     }
     private List<GameState> castledQueenSise(Tile originalTile, Tile DestinationTile, List<GameState> gameStates){
         Map<Tile, Piece> newBoard = gameStates.get(gameStates.size() - 1).getBoard().getBoardCopy();
@@ -80,6 +81,6 @@ public class ChessGameStateFactory {
         GameState newGameState = new GameState(newBoardObject, gameStates.get(gameStates.size() - 1).getGameStatus(), gameStates.get(gameStates.size() - 1).getTeamAPlayer(), gameStates.get(gameStates.size() - 1).getTeamBPlayer(), gameStates.get(gameStates.size() - 1).getColorInNextTurn());
         List<GameState> newHistory = new ArrayList<>(gameStates);
         newHistory.add(newGameState);
-        return newHistory;
+        return Collections.unmodifiableList(newHistory);
     }
 }
