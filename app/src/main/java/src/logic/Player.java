@@ -17,6 +17,7 @@ public class Player {
     }
     public MoveType CanMovePiece(Tile from, Tile to, List<GameState> gameStates) {
         TeamColor turnColor = gameStates.get(gameStates.size() - 1).getColorTurn();
+
         if(turnColor == color) {
             if(isTileInBoard(to, gameStates.get(gameStates.size() - 1).getBoard().getWidth(), gameStates.get(gameStates.size() - 1).getBoard().getLength())) {
                 Piece pieceToMove = gameStates.get(gameStates.size() - 1).getBoard().getBoard().get(from);
@@ -24,6 +25,10 @@ public class Player {
                     for(int i = 0; i <= pieceToMove.getMoveRules().length - 1;i++) {
                         MoveType moveType = pieceToMove.getMoveRules()[i].isValidMove(from, to, gameStates);
                         if(moveType != MoveType.INVALID) {
+                            if(from.getX() == 4 && from.getY() == 0) {
+                                System.out.println("Debug");
+                                System.out.println("position:" + i);
+                            }
                             return moveType;
                         }
                     }

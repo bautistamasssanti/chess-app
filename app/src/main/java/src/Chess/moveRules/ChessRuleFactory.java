@@ -30,17 +30,17 @@ public class ChessRuleFactory {
         return new ComposedMoveRule(moveRules);
     }
     public MoveRule QueenStraightMoveRule(){
+        IsDestinationFreeOfTeamPiece isDestinationFreeOfTeamPiece = new IsDestinationFreeOfTeamPiece();
         IsStraightPathFreeToCross isStraightPathFreeToCross = new IsStraightPathFreeToCross();
         IsStraightMove isStraightMove = new IsStraightMove();
-        IsDestinationFreeOfTeamPiece isDestinationFreeOfTeamPiece = new IsDestinationFreeOfTeamPiece();
-        MoveRule[] moveRules = {isStraightMove, isStraightPathFreeToCross, isDestinationFreeOfTeamPiece};
+        MoveRule[] moveRules = {isDestinationFreeOfTeamPiece, isStraightMove, isStraightPathFreeToCross};
         return new ComposedMoveRule(moveRules);
     }
     public MoveRule QueenDiagonalMoveRule(){
         IsDiagonalMove isDiagonalMove = new IsDiagonalMove();
         IsDiagonalPathFreeToCross isDiagonalPathFreeToCross = new IsDiagonalPathFreeToCross();
         IsDestinationFreeOfTeamPiece isDestinationFreeOfTeamPiece = new IsDestinationFreeOfTeamPiece();
-        MoveRule[] moveRules = {isDiagonalMove, isDiagonalPathFreeToCross,isDestinationFreeOfTeamPiece};
+        MoveRule[] moveRules = {isDiagonalMove, isDiagonalPathFreeToCross, isDestinationFreeOfTeamPiece};
         return new ComposedMoveRule(moveRules);
     }
     public MoveRule KnightMoveRule(){

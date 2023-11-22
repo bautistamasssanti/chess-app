@@ -27,7 +27,6 @@ public class IsPlayerNotInCheck implements GameRule {
         for (Tile attackingTile : attackingTiles) {
             if (opponentPlayer.CanMovePiece(attackingTile, targetTile, auxiliarGameStates) != MoveType.INVALID) {
                 return false;
-
             }
         }
         return true;

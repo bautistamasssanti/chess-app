@@ -18,6 +18,9 @@ public class CastledKingsideRule implements MoveRule {
     @Override
     public MoveType isValidMove(Tile origin, Tile destination, List<GameState> gameStates) {
         try{
+            if(origin.getY() != destination.getY()){
+                return MoveType.INVALID;
+            }
             if(isPieceWithoutPreviousMovement.isValidMove(origin, destination, gameStates) != MoveType.INVALID){
                 int boardWidth = gameStates.get(gameStates.size() - 1).getBoard().getWidth();
                 Tile castlingPieceTile = new Tile(boardWidth - 1, origin.getY());
