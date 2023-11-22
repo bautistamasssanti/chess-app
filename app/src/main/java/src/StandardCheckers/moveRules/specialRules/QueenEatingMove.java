@@ -5,6 +5,7 @@ import src.logic.gameState.GameState;
 import src.logic.moveRules.MoveRule;
 import src.logic.moveRules.MoveType;
 import src.logic.moveRules.basicRules.ArithmethicOperation;
+import src.logic.moveRules.basicRules.length.IsMovingInYAxisByMaxNTiles;
 import src.logic.moveRules.basicRules.length.IsMovingInYAxisByMinNTiles;
 import src.logic.moveRules.basicRules.path.IsDestinationTileFree;
 import src.logic.moveRules.basicRules.path.IsDiagonalPathFreeToCross;
@@ -20,6 +21,8 @@ public class QueenEatingMove implements MoveRule {
     IsDiagonalPathFreeToCross isDiagonalPathFreeToCross = new IsDiagonalPathFreeToCross();
     IsDestinationTileFree isDestinationTileFree = new IsDestinationTileFree();
     IsMovingInYAxisByMinNTiles isMovingInYAxisByMinNTiles = new IsMovingInYAxisByMinNTiles(1);
+    IsMovingInYAxisByMinNTiles isMovingInYAxisByMinNTilesHelper = new IsMovingInYAxisByMinNTiles(2);
+    IsMovingInYAxisByMaxNTiles isMovingInYAxisByMaxNTilesHelper = new IsMovingInYAxisByMaxNTiles(2);
     private final IsRivalPieceOnDestination isRivalPieceOnDestination = new IsRivalPieceOnDestination();
     @Override
     public MoveType isValidMove(Tile origin, Tile destination, List<GameState> gameStates) {
@@ -73,13 +76,18 @@ public class QueenEatingMove implements MoveRule {
         return false;
     }
     private MoveType arePossibleAttacksHelper(Tile realOrigin,Tile origin, Tile destination, List<GameState> gameStates){
-        if(isDiagonalMove.isValidMove(origin, destination, gameStates) == MoveType.INVALID) return MoveType.INVALID;
-        if(isMovingInYAxisByMinNTiles.isValidMove(origin, destination, gameStates) == MoveType.INVALID) return MoveType.INVALID;
-        Tile tileThatShouldBeOccupied = getTileThatShouldBeOccupied(origin, destination);
-        if(isDiagonalPathFreeToCross.isValidMove(origin, tileThatShouldBeOccupied, gameStates) == MoveType.INVALID) return MoveType.INVALID;
-        if(isDestinationTileFree.isValidMove(origin,tileThatShouldBeOccupied, gameStates) != MoveType.INVALID) return MoveType.INVALID;
-        if(isDestinationTileFree.isValidMove(origin, destination, gameStates) == MoveType.INVALID) return MoveType.INVALID;
-        if(isRivalPieceOnDestination.isValidMove(realOrigin, getTileThatShouldBeOccupied(realOrigin,destination),gameStates) == MoveType.INVALID) return MoveType.INVALID;
+        if (isMovingInYAxisByMaxNTilesHelper.isValidMove(origin, destination,gameStates) == MoveType.INVALID)
+            return MoveType.INVALID;
+        if (isMovingInYAxisByMinNTilesHelper.isValidMove(origin, destination,gameStates) == MoveType.INVALID)
+            return MoveType.INVALID;
+        if (isDiagonalMove.isValidMove(origin, destination,gameStates) == MoveType.INVALID)
+            return MoveType.INVALID;
+        if (isDestinationTileFree.isValidMove(origin, destination,gameStates) == MoveType.INVALID)
+            return MoveType.INVALID;
+        if(isRivalPieceOnDestination.isValidMove(realOrigin, getTileThatShouldBeOccupied(origin,destination),gameStates) == MoveType.INVALID)
+            return MoveType.INVALID;
+        if (isDiagonalPathFreeToCross.isValidMove(origin, destination,gameStates) != MoveType.INVALID)
+            return MoveType.INVALID;
         return MoveType.JUMP;
     }
 }

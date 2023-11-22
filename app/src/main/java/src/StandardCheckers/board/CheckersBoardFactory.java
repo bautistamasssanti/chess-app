@@ -30,15 +30,15 @@ public class CheckersBoardFactory {
             pieceIdCounter++;
         }
 
-        for(int x = 0; x < width; x=x+2 ){
+        for(int x = 1; x < width; x=x+2 ){
             board.put(new Tile(x,5),checkersPieceFactory.man(TeamColor.BLACK, pieceIdCounter));
             pieceIdCounter++;
         }
-        for(int x = 1; x < width; x=x+2 ){
+        for(int x = 0; x < width; x=x+2 ){
             board.put(new Tile(x,6),checkersPieceFactory.man(TeamColor.BLACK, pieceIdCounter));
             pieceIdCounter++;
         }
-        for(int x = 0; x < width; x=x+2 ){
+        for(int x = 1; x < width; x=x+2 ){
             board.put(new Tile(x,7),checkersPieceFactory.man(TeamColor.BLACK, pieceIdCounter));
             pieceIdCounter++;
         }
