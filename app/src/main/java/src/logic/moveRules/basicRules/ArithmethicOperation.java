@@ -9,4 +9,7 @@ public class ArithmethicOperation {
     public int getYMovement(Tile origin, Tile destination){
         return destination.getY()-origin.getY();
     }
+    public int getAbsoluteValue(int value){
+        return Math.abs(value);
+    }
 }

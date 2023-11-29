@@ -51,25 +51,25 @@ public class GameModeImplementation implements GameMode{
     public List<GameState> isBoardStateValid(List<GameState> gameStates) {
         List<GameState> stateToCheck = getGameStateToCheck(gameStates);
         try{
-            for (GameRule gameRule : gameRules) {
-                if (!gameRule.isGameRuleValid(gameStates)) {
-                    throw new GameRuleUnfullfilledException(gameRule.getGameRuleName());
-                }
-            }
+            areGameRulesValid(stateToCheck);
         } catch (Exception e){
             System.out.println(e.getMessage());
-            return new ArrayList<>(gameStates.subList(0, gameStates.size() - 1));
+            return getPreviousState(gameStates);
         }
         return stateToCheck;
     }
-
-    @Override
-    public List<GameState> getInitialState(Board board, Player teamAPlayer, Player teamBPlayer, TeamColor initialTurn) {
-        GameState initialState = new GameState(board, GameStatus.InProgress, teamAPlayer, teamBPlayer, initialTurn);
-        List<GameState> state = new ArrayList<>();
-        state.add(initialState);
-        return Collections.unmodifiableList(state);
+    private void areGameRulesValid(List<GameState> gameStates) throws GameRuleUnfullfilledException {
+        for (GameRule gameRule : gameRules) {
+            if (!gameRule.isGameRuleValid(gameStates)) {
+                throw new GameRuleUnfullfilledException(gameRule.getGameRuleName());
+            }
+        }
     }
+    private List<GameState> getPreviousState(List<GameState> gameStates){
+        return new ArrayList<>(gameStates.subList(0, gameStates.size() - 1));
+    }
+
+
 
     private List<GameState> getGameStateToCheck(List<GameState> initialState){
         List<GameState> stateToCheck = initialState;
@@ -77,5 +77,12 @@ public class GameModeImplementation implements GameMode{
             stateToCheck = optionalGameRule.isOptionalConditionulfilled(stateToCheck);
         }
         return stateToCheck;
+    }
+    @Override
+    public List<GameState> getInitialState(Board board, Player teamAPlayer, Player teamBPlayer, TeamColor initialTurn) {
+        GameState initialState = new GameState(board, GameStatus.InProgress, teamAPlayer, teamBPlayer, initialTurn);
+        List<GameState> state = new ArrayList<>();
+        state.add(initialState);
+        return Collections.unmodifiableList(state);
     }
 }

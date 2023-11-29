@@ -22,9 +22,22 @@ public class IsLShapedMove implements MoveRule {
     public MoveType isValidMove(Tile origin, Tile destination, List<GameState> gameStates) {
         int xMovement = arithmethicOperation.getXMovement(origin, destination);
         int yMovement = arithmethicOperation.getYMovement(origin, destination);
-        if((Math.abs(xMovement) == side_A && Math.abs(yMovement) == side_B) || (Math.abs(xMovement) == side_B && Math.abs(yMovement) == side_A)){
+        if(checksConditions(xMovement, yMovement)){
             return MoveType.BASIC;
         }
         return MoveType.INVALID;
+    }
+    private boolean checksConditions(int xMovement, int yMovement){
+        if(arithmethicOperation.getAbsoluteValue(xMovement) == side_A){
+            if(arithmethicOperation.getAbsoluteValue(yMovement) == side_B){
+                return true;
+            }
+        }
+        if(arithmethicOperation.getAbsoluteValue(xMovement) == side_B){
+            if(arithmethicOperation.getAbsoluteValue(yMovement) == side_A){
+                return true;
+            }
+        }
+        return false;
     }
 }

@@ -19,7 +19,7 @@ public class IsMovingInXAxisByMinNTiles implements MoveRule {
     @Override
     public MoveType isValidMove(Tile origin, Tile destination, List<GameState> gameStates) {
         int xMovement = arithmethicOperation.getXMovement(origin, destination);
-        if(Math.abs(xMovement) >= minTiles){
+        if(arithmethicOperation.getAbsoluteValue(xMovement) >= minTiles){
             return MoveType.BASIC;
         }
         return MoveType.INVALID;

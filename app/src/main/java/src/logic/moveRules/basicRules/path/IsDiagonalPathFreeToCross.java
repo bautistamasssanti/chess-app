@@ -17,37 +17,46 @@ public class IsDiagonalPathFreeToCross implements MoveRule {
         int yMovement = arithmethicOperation.getYMovement(origin, destination);
         Board board = gameStates.get(gameStates.size() - 1).getBoard();
         if((xMovement > 0) && (yMovement > 0)){
-            for(int i = origin.getX() + 1, j = origin.getY() + 1; i < destination.getX() && j < destination.getY(); i++, j++){
-                if(board.getBoard().get(new Tile(i, j)) != null){
-                    return MoveType.INVALID;
-                }
-            }
-            return MoveType.BASIC;
-        }
-        else if((xMovement > 0) && (yMovement < 0)){
-            for(int i = origin.getX() + 1, j = origin.getY() - 1; i < destination.getX() && j > destination.getY(); i++, j--){
-                if(board.getBoard().get(new Tile(i, j)) != null){
-                    return MoveType.INVALID;
-                }
-            }
-            return MoveType.BASIC;
-        }
-        else if((xMovement < 0) && (yMovement > 0)){
-            for(int i = origin.getX() - 1, j = origin.getY() + 1; i > destination.getX() && j < destination.getY(); i--, j++){
-                if(board.getBoard().get(new Tile(i, j)) != null){
-                    return MoveType.INVALID;
-                }
-            }
-            return MoveType.BASIC;
-        }
-        else if((xMovement < 0) && (yMovement < 0)){
-            for(int i = origin.getX() - 1, j = origin.getY() - 1; i > destination.getX() && j > destination.getY(); i--, j--){
-                if(board.getBoard().get(new Tile(i, j)) != null){
-                    return MoveType.INVALID;
-                }
-            }
-            return MoveType.BASIC;
+            return rightUpwardsChecker(origin, destination, board);
+        } else if((xMovement > 0) && (yMovement < 0)){
+            return rightDownwardsChecker(origin, destination, board);
+        } else if((xMovement < 0) && (yMovement > 0)){
+            return leftUpwardsChecker(origin, destination, board);
+        } else if((xMovement < 0) && (yMovement < 0)){
+            return leftDownwardsChecker(origin, destination, board);
         }
         return MoveType.INVALID;
+    }
+    private MoveType rightUpwardsChecker(Tile origin, Tile destination, Board board){
+        for(int x = origin.getX() + 1, y = origin.getY() + 1; x < destination.getX() && y < destination.getY(); x++, y++){
+            if(board.getBoard().containsKey(new Tile(x, y))){
+                return MoveType.INVALID;
+            }
+        }
+        return MoveType.BASIC;
+    }
+    private MoveType rightDownwardsChecker(Tile origin, Tile destination, Board board){
+        for(int x = origin.getX() + 1, y = origin.getY() - 1; x < destination.getX() && y > destination.getY(); x++, y--){
+            if(board.getBoard().containsKey(new Tile(x, y))){
+                return MoveType.INVALID;
+            }
+        }
+        return MoveType.BASIC;
+    }
+    private MoveType leftUpwardsChecker(Tile origin, Tile destination, Board board){
+        for(int x = origin.getX() - 1, y = origin.getY() + 1; x > destination.getX() && y < destination.getY(); x--, y++){
+            if(board.getBoard().containsKey(new Tile(x, y))){
+                return MoveType.INVALID;
+            }
+        }
+        return MoveType.BASIC;
+    }
+    private MoveType leftDownwardsChecker(Tile origin, Tile destination, Board board){
+        for(int x = origin.getX() - 1, y = origin.getY() - 1; x > destination.getX() && y > destination.getY(); x--, y--){
+            if(board.getBoard().containsKey(new Tile(x, y))){
+                return MoveType.INVALID;
+            }
+        }
+        return MoveType.BASIC;
     }
 }

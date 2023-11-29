@@ -12,7 +12,8 @@ public class IsMovingLeft implements MoveRule {
     @Override
     public MoveType isValidMove(Tile origin, Tile destination, List<GameState> gameStates) {
         TeamColor pieceColor = gameStates.get(gameStates.size() - 1).getBoard().getBoard().get(origin).getColor();
-        if(pieceColor == gameStates.get(gameStates.size() - 1).getTeamAPlayer().getColor()){
+        TeamColor teamAColor = gameStates.get(gameStates.size() - 1).getTeamAPlayer().getColor();
+        if(pieceColor == teamAColor){
             if(destination.getX() < origin.getX()){
                 return MoveType.BASIC;
             }

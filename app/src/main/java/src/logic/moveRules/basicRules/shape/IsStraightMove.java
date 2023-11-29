@@ -14,9 +14,22 @@ public class IsStraightMove implements MoveRule {
     public MoveType isValidMove(Tile origin, Tile destination, List<GameState> gameStates) {
         int xMovement = arithmethicOperation.getXMovement(origin, destination);
         int yMovement = arithmethicOperation.getYMovement(origin, destination);
-        if((xMovement == 0 && yMovement != 0) || (xMovement != 0 && yMovement == 0)){
+        if(checksConditions(xMovement, yMovement)){
             return MoveType.BASIC;
         }
         return MoveType.INVALID;
+    }
+    private boolean checksConditions(int xMovement, int yMovement){
+        if(xMovement == 0){
+            if(yMovement != 0){
+                return true;
+            }
+        }
+        if (xMovement != 0){
+            if(yMovement == 0){
+                return true;
+            }
+        }
+        return false;
     }
 }

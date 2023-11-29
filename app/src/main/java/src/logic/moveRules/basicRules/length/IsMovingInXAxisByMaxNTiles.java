@@ -19,7 +19,7 @@ public class IsMovingInXAxisByMaxNTiles implements MoveRule {
     @Override
     public MoveType isValidMove(Tile origin, Tile destination, List<GameState> gameStates) {
         int xMovement = arithmethicOperation.getXMovement(origin, destination);
-        if(Math.abs(xMovement) <= maxTiles){
+        if(arithmethicOperation.getAbsoluteValue(xMovement) <= maxTiles){
             return MoveType.BASIC;
         }
         return MoveType.INVALID;

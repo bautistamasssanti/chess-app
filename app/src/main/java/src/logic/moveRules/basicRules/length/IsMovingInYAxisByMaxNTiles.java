@@ -17,8 +17,8 @@ public class IsMovingInYAxisByMaxNTiles implements MoveRule {
     }
     @Override
     public MoveType isValidMove(Tile origin, Tile destination, List<GameState> gameStates) {
-        int YMovement = arithmethicOperation.getYMovement(origin, destination);
-        if(Math.abs(YMovement) <= maxTiles){
+        int yMovement = arithmethicOperation.getYMovement(origin, destination);
+        if(arithmethicOperation.getAbsoluteValue(yMovement) <= maxTiles){
             return MoveType.BASIC;
         }
         return MoveType.INVALID;

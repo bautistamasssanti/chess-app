@@ -14,9 +14,18 @@ public class IsDiagonalMove implements MoveRule {
     public MoveType isValidMove(Tile origin, Tile destination, List<GameState> gameStates) {
         int xMovement = arithmethicOperation.getXMovement(origin, destination);
         int yMovement = arithmethicOperation.getYMovement(origin, destination);
-        if((Math.abs(xMovement) == Math.abs(yMovement)) && (xMovement != 0)){
+        if(checksConditions(xMovement, yMovement)){
             return MoveType.BASIC;
         }
         return MoveType.INVALID;
+    }
+    private boolean checksConditions(int xMovement, int yMovement){
+        if(xMovement == 0){
+            return false;
+        }
+        if(arithmethicOperation.getAbsoluteValue(xMovement) != arithmethicOperation.getAbsoluteValue(yMovement)){
+            return false;
+        }
+        return true;
     }
 }

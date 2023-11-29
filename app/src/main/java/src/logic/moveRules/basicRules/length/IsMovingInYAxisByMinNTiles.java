@@ -19,8 +19,8 @@ public class IsMovingInYAxisByMinNTiles implements MoveRule {
 
     @Override
     public MoveType isValidMove(Tile origin, Tile destination, List<GameState> gameStates) {
-        int YMovement = arithmethicOperation.getYMovement(origin, destination);
-        if(Math.abs(YMovement) >= minTiles){
+        int yMovement = arithmethicOperation.getYMovement(origin, destination);
+        if(arithmethicOperation.getAbsoluteValue(yMovement) >= minTiles){
             return MoveType.BASIC;
         }
         return MoveType.INVALID;

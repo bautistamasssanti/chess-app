@@ -51,7 +51,6 @@ public class Board {
 
     }
 
-
     public int getWidth() {
         return width;
     }

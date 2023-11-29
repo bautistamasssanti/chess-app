@@ -13,7 +13,8 @@ public class IsPieceWithoutPreviousMovement implements MoveRule {
     public MoveType isValidMove(Tile origin, Tile destination, List<GameState> gameStates) {
         Piece currentPiece = gameStates.get(gameStates.size() - 1).getBoard().getBoard().get(origin);
         for (GameState gameState : gameStates) {
-            if (!currentPiece.equals(gameState.getBoard().getBoard().get(origin))) {
+            Piece pieceInGameState = gameState.getBoard().getBoard().get(origin);
+            if (!currentPiece.equals(pieceInGameState)) {
                 return MoveType.INVALID;
             }
         }
