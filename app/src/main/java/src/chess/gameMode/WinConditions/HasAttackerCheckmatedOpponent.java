@@ -33,7 +33,7 @@ public class HasAttackerCheckmatedOpponent implements WinCondition {
         List<Tile> defenderTiles= gameStates.get(gameStates.size() - 1).getBoard().getTeamTiles(defender.getColor());
         for(Tile defenderTile : defenderTiles){
             for(Tile targetTile : totalTiles){
-                MoveType moveType = defender.CanMovePiece(defenderTile, targetTile, gameStates);
+                MoveType moveType = defender.canMovePiece(defenderTile, targetTile, gameStates);
                 if(moveType != MoveType.INVALID){
                     List<GameState> auxiliarGameStates =chessGameStateFactory.movePiece(moveType,defenderTile, targetTile, gameStates);
                     if(new IsPlayerNotInCheck(defender).isGameRuleValid(auxiliarGameStates)){

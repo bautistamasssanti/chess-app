@@ -52,8 +52,8 @@ public class Drowned implements DrawCondition {
         Tile kingTile = gameStates.get(gameStates.size() - 1).getBoard().getOccupiedTileFromPieceTypeAndColor(src.logic.piece.PieceType.KING, teamToReview.getColor()).get(0);
         List<Tile> adjacentTiles = getAdjacentTiles(kingTile, gameStates);
         for(Tile adjacentTile : adjacentTiles){
-            if(teamToReview.CanMovePiece(kingTile, adjacentTile, gameStates) != src.logic.moveRules.MoveType.INVALID){
-                List<GameState> updatedGameState = chessGameStateFactory.movePiece(teamToReview.CanMovePiece(kingTile, adjacentTile, gameStates), kingTile, adjacentTile, gameStates);
+            if(teamToReview.canMovePiece(kingTile, adjacentTile, gameStates) != src.logic.moveRules.MoveType.INVALID){
+                List<GameState> updatedGameState = chessGameStateFactory.movePiece(teamToReview.canMovePiece(kingTile, adjacentTile, gameStates), kingTile, adjacentTile, gameStates);
                 updatedGameState = updatedGameState(updatedGameState, teamToReview);
                 if(isPlayerNotInCheck.isGameRuleValid(updatedGameState)){
                     return true;
@@ -87,7 +87,7 @@ public class Drowned implements DrawCondition {
             for(int i = 0; i < length; i++){
                 for(int j = 0; j < width; j++){
                     Tile targetTile = new Tile(i, j);
-                    MoveType moveType = player.CanMovePiece(teamTile, targetTile, updatedGameStates);
+                    MoveType moveType = player.canMovePiece(teamTile, targetTile, updatedGameStates);
                     if(moveType != src.logic.moveRules.MoveType.INVALID){
                         updatedGameStates = chessGameStateFactory.movePiece(moveType, teamTile, targetTile, gameStates);
                         updatedGameStates = updatedGameState(updatedGameStates, player);

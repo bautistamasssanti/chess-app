@@ -29,7 +29,7 @@ public class ChessTurnController implements TurnController {
             if (player.getColor() != gameStates.get(gameStates.size() - 1).getCurrentTurnPlayer().getColor()) {
                 throw new NotPlayerTurnException();
             }
-            MoveType moveType = player.CanMovePiece(origin, destination, gameStates);
+            MoveType moveType = player.canMovePiece(origin, destination, gameStates);
 
             if(moveType == MoveType.INVALID) {
                 throw new GameRuleUnfullfilledException("Invalid move");

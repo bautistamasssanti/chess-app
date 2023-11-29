@@ -16,7 +16,7 @@ public class CanPlayerMoveAnyPiece implements WinCondition {
             for (int x = 0; x < gameStates.get(gameStates.size() - 1).getBoard().getWidth(); x++) {
                 for (int y = 0; y < gameStates.get(gameStates.size() - 1).getBoard().getLength(); y++) {
                     Tile destination = new Tile(x, y);
-                    if (player.CanMovePiece(playerTile, destination, gameStates) != MoveType.INVALID) {
+                    if (player.canMovePiece(playerTile, destination, gameStates) != MoveType.INVALID) {
                         return true;
                     }
                 }

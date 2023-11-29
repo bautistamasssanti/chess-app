@@ -1,6 +1,8 @@
 package src.logic;
 
+import src.logic.board.Board;
 import src.logic.gameState.GameState;
+import src.logic.moveRules.MoveRule;
 import src.logic.piece.Piece;
 import src.logic.moveRules.MoveType;
 
@@ -15,33 +17,63 @@ public class Player {
     public TeamColor getColor() {
         return color;
     }
-    public MoveType CanMovePiece(Tile from, Tile to, List<GameState> gameStates) {
+    public MoveType canMovePiece(Tile from, Tile to, List<GameState> gameStates) {
+        Piece pieceToMove = gameStates.get(gameStates.size() - 1).getBoard().getBoard().get(from);
         TeamColor turnColor = gameStates.get(gameStates.size() - 1).getColorTurn();
-
-        if(turnColor == color) {
-            if(isTileInBoard(to, gameStates.get(gameStates.size() - 1).getBoard().getWidth(), gameStates.get(gameStates.size() - 1).getBoard().getLength())) {
-                Piece pieceToMove = gameStates.get(gameStates.size() - 1).getBoard().getBoard().get(from);
-                if (pieceToMove != null && pieceToMove.getColor() == turnColor) {
-                    for(int i = 0; i <= pieceToMove.getMoveRules().length - 1;i++) {
-                        MoveType moveType = pieceToMove.getMoveRules()[i].isValidMove(from, to, gameStates);
-                        if(moveType != MoveType.INVALID) {
-                            if(from.getX() == 4 && from.getY() == 0) {
-                                System.out.println("Debug");
-                                System.out.println("position:" + i);
-                            }
-                            return moveType;
-                        }
-                    }
-                }
-            }
-
+         if(checksConditions(from, to, gameStates, pieceToMove, turnColor)) {
+             return checkMoveType(gameStates, from, to, pieceToMove);
         }
         return MoveType.INVALID;
     }
-    private boolean isTileInBoard(Tile tile, int BoardWidth, int BoardLength) {
-        if(tile.getX() < 0 || tile.getX() > BoardWidth) {
+    private MoveType checkMoveType(List<GameState> gameStates, Tile from, Tile to, Piece pieceToMove){
+        MoveRule[] moveRules = pieceToMove.getMoveRules();
+        for(MoveRule rule : moveRules){
+            MoveType moveType = rule.isValidMove(from, to, gameStates);
+            if(moveType != MoveType.INVALID){
+                return moveType;
+            }
+        }
+        return MoveType.INVALID;
+    }
+    private boolean checksConditions(Tile from, Tile to, List<GameState> gameStates, Piece pieceToMove, TeamColor turnColor){
+        if(!isPlayerTurn(gameStates, turnColor)) {
             return false;
         }
-        return tile.getY() >= 0 && tile.getY() <= BoardLength;
+        if(!isTileInBoard(to,gameStates)) {
+            return false;
+        }
+        if(!isOriginTileOccupied(from,gameStates)) {
+            return false;
+        }
+        if(!pieceColorMatchesTurnColor(pieceToMove, turnColor)) {
+            return false;
+        }
+        return true;
+    }
+    private boolean isPlayerTurn(List<GameState> gameStates, TeamColor turnColor) {
+        return turnColor == color;
+    }
+    private boolean isTileInBoard(Tile to, List<GameState> gameStates) {
+        int boardWidth = gameStates.get(gameStates.size() - 1).getBoard().getWidth();
+        int boardLength = gameStates.get(gameStates.size() - 1).getBoard().getLength();
+        if(to.getX() < 0) {
+            return false;
+        }
+        if(to.getX() > boardWidth){
+            return false;
+        }
+        if(to.getY() >= 0){
+            if(to.getY() <= boardLength){
+                return true;
+            }
+        }
+        return false;
+    }
+    private boolean isOriginTileOccupied(Tile from, List<GameState> gameStates) {
+        Board board = gameStates.get(gameStates.size() - 1).getBoard();
+        return board.getBoard().containsKey(from);
+    }
+    private boolean pieceColorMatchesTurnColor(Piece pieceToMove, TeamColor turnColor) {
+        return pieceToMove.getColor() == turnColor;
     }
 }

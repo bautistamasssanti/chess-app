@@ -25,7 +25,7 @@ public class IsPlayerNotInCheck implements GameRule {
         List<GameState> auxiliarGameStates = chessGameStateFactory.changeTurnColor(opponentPlayer.getColor(), gameStates);
         List<Tile> attackingTiles = gameStates.get(gameStates.size() - 1).getBoard().getTeamTiles(opponentPlayer.getColor());
         for (Tile attackingTile : attackingTiles) {
-            if (opponentPlayer.CanMovePiece(attackingTile, targetTile, auxiliarGameStates) != MoveType.INVALID) {
+            if (opponentPlayer.canMovePiece(attackingTile, targetTile, auxiliarGameStates) != MoveType.INVALID) {
                 return false;
             }
         }
