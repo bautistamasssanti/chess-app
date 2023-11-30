@@ -4,6 +4,7 @@ import src.internationalCheckers.gameState.CheckersGameStateFactory;
 import src.logic.Player;
 import src.logic.gameMode.WinCondition;
 import src.logic.gameState.GameState;
+import src.standardCheckers.gameMode.winConditions.CanPlayerMoveAnyPiece;
 
 import java.util.List;
 

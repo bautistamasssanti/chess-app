@@ -24,14 +24,12 @@ public class QueenEatingMove implements MoveRule {
     IsMovingInYAxisByMinNTiles isMovingInYAxisByMinNTilesHelper = new IsMovingInYAxisByMinNTiles(2);
     IsMovingInYAxisByMaxNTiles isMovingInYAxisByMaxNTilesHelper = new IsMovingInYAxisByMaxNTiles(2);
     private final IsRivalPieceOnDestination isRivalPieceOnDestination = new IsRivalPieceOnDestination();
+    private final MoveRule[] moveRules = {isDiagonalMove, isDiagonalPathFreeToCross, isDestinationTileFree, isMovingInYAxisByMinNTiles, isRivalPieceOnDestination};
     @Override
     public MoveType isValidMove(Tile origin, Tile destination, List<GameState> gameStates) {
-        if(isDiagonalMove.isValidMove(origin, destination, gameStates) == MoveType.INVALID) return MoveType.INVALID;
-        if(isMovingInYAxisByMinNTiles.isValidMove(origin, destination, gameStates) == MoveType.INVALID) return MoveType.INVALID;
-        Tile tileThatShouldBeOccupied = getTileThatShouldBeOccupied(origin, destination);
-        if(isDiagonalPathFreeToCross.isValidMove(origin, tileThatShouldBeOccupied, gameStates) == MoveType.INVALID) return MoveType.INVALID;
-        if(isDestinationTileFree.isValidMove(origin,tileThatShouldBeOccupied, gameStates) != MoveType.INVALID) return MoveType.INVALID;
-        if(isDestinationTileFree.isValidMove(origin, destination, gameStates) == MoveType.INVALID) return MoveType.INVALID;
+        if(!fulfillsAllRules(origin, destination, gameStates)){
+            return MoveType.INVALID;
+        }
         List<Tile> possibleAttackTiles = getPossibleAttackTiles(destination, gameStates);
         if(!possibleAttackTiles.isEmpty()){
             if(arePossibleAttacks(origin ,destination, possibleAttackTiles, gameStates)){
@@ -40,6 +38,15 @@ public class QueenEatingMove implements MoveRule {
         }
         return MoveType.SPECIAL1;
     }
+    private boolean fulfillsAllRules(Tile origin, Tile destination, List<GameState> gameStates){
+        for(MoveRule moveRule : moveRules){
+            if(moveRule.isValidMove(origin, destination, gameStates) == MoveType.INVALID){
+                return false;
+            }
+        }
+        return true;
+    }
+
     private Tile getTileThatShouldBeOccupied(Tile origin, Tile destination) {
         if (arithmethicOperation.getXMovement(origin, destination) > 0 && arithmethicOperation.getYMovement(origin, destination) > 0) {
             return new Tile(destination.getX() - 1, destination.getY() - 1);

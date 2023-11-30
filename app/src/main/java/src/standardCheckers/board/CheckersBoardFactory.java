@@ -29,7 +29,6 @@ public class CheckersBoardFactory {
             board.put(new Tile(x,2),checkersPieceFactory.man(TeamColor.WHITE, pieceIdCounter));
             pieceIdCounter++;
         }
-
         for(int x = 1; x < width; x=x+2 ){
             board.put(new Tile(x,5),checkersPieceFactory.man(TeamColor.BLACK, pieceIdCounter));
             pieceIdCounter++;

@@ -1,5 +1,6 @@
 package src.standardCheckers.gameMode.optionalGameRules;
 
+import src.logic.board.Board;
 import src.standardCheckers.gameState.CheckersGameStateFactory;
 import src.logic.TeamColor;
 import src.logic.Tile;
@@ -17,27 +18,43 @@ public class Promote implements OptionalGameRule {
         TeamColor currentTurnColor = gameStates.get(gameStates.size() - 1).getColorTurn();
         TeamColor previousTurnColor = gameStates.get(gameStates.size() - 2).getColorTurn();
         if(currentTurnColor != previousTurnColor){
-            List<GameState> currentStates = gameStates;
-            List<Tile> occupiedTiles = currentStates.get(currentStates.size() - 1).getBoard().getOccupiedTiles();
-            for (Tile occupiedTile : occupiedTiles) {
-                Piece piece = currentStates.get(currentStates.size() - 1).getBoard().getBoard().get(occupiedTile);
-                if (piece.getType() == PieceType.MAN) {
-                    if (((occupiedTile.getY() == 0 || occupiedTile.getY() == currentStates.get(currentStates.size() - 1).getBoard().getLength() - 1) && hasPieceMoved(occupiedTile, currentStates))) {
-                        currentStates = gameStateFactory.promotePiece(occupiedTile, currentStates, PieceType.QUEEN);
-                    }
-                }
-            }
-            return currentStates;
+            return updateStates(gameStates);
         }
         return gameStates;
     }
+    private List<GameState> updateStates(List<GameState> gameStates){
+        List<GameState> currentStates = gameStates;
+        List<Tile> occupiedTiles = currentStates.get(currentStates.size() - 1).getBoard().getOccupiedTiles();
+        for (Tile occupiedTile : occupiedTiles) {
+            Piece piece = currentStates.get(currentStates.size() - 1).getBoard().getBoard().get(occupiedTile);
+            if(checkCondition(currentStates, occupiedTile, piece)){
+                currentStates = gameStateFactory.promotePiece(occupiedTile, currentStates, PieceType.QUEEN);
+            }
+        }
+        return currentStates;
+    }
+    private boolean checkCondition(List<GameState> currentStates,Tile occupiedTile, Piece piece){
+        if (piece.getType() == PieceType.MAN) {
+            if (occupiedTile.getY() == 0) {
+                if (hasPieceMoved(occupiedTile, currentStates)) {
+                    return true;
+                }
+            }
+            if (occupiedTile.getY() == currentStates.get(currentStates.size() - 1).getBoard().getLength() - 1) {
+                if (hasPieceMoved(occupiedTile, currentStates)) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
     private boolean hasPieceMoved(Tile toAnalize, List<GameState> gameStates){
-        for (int i = 0; i < gameStates.size() - 1; i++) {
-            if(gameStates.get(i).getBoard().getBoard().get(toAnalize).getId() != gameStates.get(gameStates.size()-1).getBoard().getBoard().get(toAnalize).getId()){
+        Board currentBoard = gameStates.get(gameStates.size() - 1).getBoard();
+        for (GameState gameState: gameStates) {
+            if(gameState.getBoard().getBoard().get(toAnalize).getId() != currentBoard.getBoard().get(toAnalize).getId()){
                 return true;
             }
         }
         return false;
-
     }
 }

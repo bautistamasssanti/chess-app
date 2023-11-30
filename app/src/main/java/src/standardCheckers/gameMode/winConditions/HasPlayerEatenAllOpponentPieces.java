@@ -2,6 +2,7 @@ package src.standardCheckers.gameMode.winConditions;
 
 import src.logic.Player;
 import src.logic.Tile;
+import src.logic.board.Board;
 import src.logic.gameMode.WinCondition;
 import src.logic.gameState.GameState;
 
@@ -13,9 +14,10 @@ public class HasPlayerEatenAllOpponentPieces implements WinCondition {
         return getOpponentTilesList(player, gameStates).isEmpty();
     }
     private List<Tile> getOpponentTilesList(Player player, List<GameState> gameStates){
+        Board currentBoard = gameStates.get(gameStates.size()-1).getBoard();
         if(player.getColor() == gameStates.get(0).getTeamAPlayer().getColor())
-            return gameStates.get(gameStates.size()-1).getBoard().getTeamTiles(gameStates.get(0).getTeamBPlayer().getColor());
+            return currentBoard.getTeamTiles(gameStates.get(0).getTeamBPlayer().getColor());
         else
-            return gameStates.get(gameStates.size()-1).getBoard().getTeamTiles(gameStates.get(0).getTeamAPlayer().getColor());
+            return currentBoard.getTeamTiles(gameStates.get(0).getTeamAPlayer().getColor());
     }
 }

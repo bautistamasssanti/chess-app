@@ -9,8 +9,18 @@ import java.util.List;
 public class NotEnoughMaterial implements DrawCondition {
     @Override
     public boolean isGameADraw(List<GameState> gameStates) {
-        List<Tile> teamAOccupiedTiles = gameStates.get(gameStates.size() - 1).getBoard().getTeamTiles(gameStates.get(gameStates.size() - 1).getTeamAPlayer().getColor());
-        List<Tile> teamBOccupiedTiles = gameStates.get(gameStates.size() - 1).getBoard().getTeamTiles(gameStates.get(gameStates.size() - 1).getTeamBPlayer().getColor());
-        return teamAOccupiedTiles.size() <= 2 && teamBOccupiedTiles.size() == 1 || teamBOccupiedTiles.size() <= 2 && teamAOccupiedTiles.size() == 1;
+        GameState gameState = gameStates.get(gameStates.size() - 1);
+        List<Tile> teamATiles = gameState.getBoard().getTeamTiles(gameState.getTeamAPlayer().getColor());
+        List<Tile> teamBTiles = gameState.getBoard().getTeamTiles(gameState.getTeamBPlayer().getColor());
+        return checkConditions(gameStates, teamATiles, teamBTiles);
+    }
+    private boolean checkConditions(List<GameState> gameStates, List<Tile> teamATiles, List<Tile> teamBTiles){
+        if(teamATiles.size() <= 2 && teamBTiles.size() == 1){
+            return true;
+        }
+        if(teamBTiles.size() <= 2 && teamATiles.size() == 1){
+            return true;
+        }
+        return false;
     }
 }
