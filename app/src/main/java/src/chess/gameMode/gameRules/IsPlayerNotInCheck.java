@@ -3,6 +3,7 @@ package src.chess.gameMode.gameRules;
 import src.chess.factories.ChessGameStateFactory;
 import src.logic.Player;
 import src.logic.Tile;
+import src.logic.board.Board;
 import src.logic.gameMode.GameRule;
 import src.logic.gameState.GameState;
 import src.logic.moveRules.MoveType;
@@ -20,10 +21,11 @@ public class IsPlayerNotInCheck implements GameRule {
 
     @Override
     public boolean isGameRuleValid(List<GameState> gameStates) {
-        Tile targetTile = gameStates.get(gameStates.size() - 1).getBoard().getOccupiedTileFromPieceTypeAndColor(PieceType.KING, playerToReview.getColor()).get(0);
+        Board board = gameStates.get(gameStates.size() - 1).getBoard();
+        Tile targetTile = board.getOccupiedTileFromPieceTypeAndColor(PieceType.KING, playerToReview.getColor()).get(0);
         Player opponentPlayer = getOpponentPlayer(gameStates, playerToReview);
         List<GameState> auxiliarGameStates = chessGameStateFactory.changeTurnColor(opponentPlayer.getColor(), gameStates);
-        List<Tile> attackingTiles = gameStates.get(gameStates.size() - 1).getBoard().getTeamTiles(opponentPlayer.getColor());
+        List<Tile> attackingTiles = board.getTeamTiles(opponentPlayer.getColor());
         for (Tile attackingTile : attackingTiles) {
             if (opponentPlayer.canMovePiece(attackingTile, targetTile, auxiliarGameStates) != MoveType.INVALID) {
                 return false;

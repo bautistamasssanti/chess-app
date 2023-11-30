@@ -1,5 +1,6 @@
 package src.chess.moveRules.specialRules;
 
+import src.logic.board.Board;
 import src.logic.moveRules.MoveType;
 import src.logic.piece.Piece;
 import src.logic.gameState.GameState;
@@ -18,20 +19,48 @@ public class CastledKingsideRule implements MoveRule {
     @Override
     public MoveType isValidMove(Tile origin, Tile destination, List<GameState> gameStates) {
         try{
-            if(origin.getY() != destination.getY()){
-                return MoveType.INVALID;
-            }
-            if(isPieceWithoutPreviousMovement.isValidMove(origin, destination, gameStates) != MoveType.INVALID){
-                int boardWidth = gameStates.get(gameStates.size() - 1).getBoard().getWidth();
-                Tile castlingPieceTile = new Tile(boardWidth - 1, origin.getY());
-                Piece castlingPiece = gameStates.get(gameStates.size() - 1).getBoard().getBoard().get(castlingPieceTile);
-                if(castlingPiece.getType().equals(ROOK) && isPieceWithoutPreviousMovement.isValidMove(castlingPieceTile, destination, gameStates) != MoveType.INVALID && isStraightPathFreeToCross.isValidMove(origin, castlingPieceTile, gameStates) != MoveType.INVALID){
-                    return MoveType.SPECIAL1;
-                }
+            if(checkConditions(origin, destination, gameStates)){
+                return MoveType.SPECIAL1;
             }
             return MoveType.INVALID;
         } catch (Exception e){
             return MoveType.INVALID;
         }
+    }
+    private boolean checkConditions(Tile origin, Tile destination, List<GameState> gameStates){
+        if(!checkValidCoordinates(origin, destination, gameStates)){
+            return false;
+        }
+        Board board = gameStates.get(gameStates.size() - 1).getBoard();
+        Tile castlingPieceTile = new Tile(board.getWidth() - 1, origin.getY());
+        Piece castlingPiece = board.getBoard().get(castlingPieceTile);
+        if(!castlingPiece.getType().equals(ROOK)){
+            return false;
+        }
+        if(!checkPiecesWithoutMovement(origin, castlingPieceTile, destination, gameStates)){
+            return false;
+        }
+        if(isStraightPathFreeToCross.isValidMove(origin, castlingPieceTile, gameStates) == MoveType.INVALID){
+            return false;
+        }
+        return true;
+    }
+    private boolean checkValidCoordinates(Tile origin, Tile destination, List<GameState> gameStates){
+        if(origin.getY() != destination.getY()){
+            return false;
+        }
+        if(destination.getX() != gameStates.get(gameStates.size() - 1).getBoard().getWidth() - 2){
+            return false;
+        }
+        return true;
+    }
+    private boolean checkPiecesWithoutMovement(Tile origin, Tile castlingPieceTile, Tile destination, List<GameState> gameStates){
+        if(isPieceWithoutPreviousMovement.isValidMove(origin, destination, gameStates) == MoveType.INVALID){
+            return false;
+        }
+        if(isPieceWithoutPreviousMovement.isValidMove(castlingPieceTile, destination, gameStates) == MoveType.INVALID){
+            return false;
+        }
+        return true;
     }
 }

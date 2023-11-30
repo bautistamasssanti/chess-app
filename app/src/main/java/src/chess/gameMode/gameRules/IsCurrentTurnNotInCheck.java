@@ -20,7 +20,8 @@ public class IsCurrentTurnNotInCheck implements GameRule {
         return "Check";
     }
     private Player getPlayerToReview(List<GameState> gameStates){
-        if (gameStates.get(gameStates.size() - 2).getColorTurn() == gameStates.get(gameStates.size() - 2).getTeamAPlayer().getColor()) {
+        GameState previousGameState = gameStates.get(gameStates.size() - 2);
+        if (previousGameState.getColorTurn() == previousGameState.getTeamAPlayer().getColor()) {
             return gameStates.get(gameStates.size() - 1).getTeamAPlayer();
         } else {
             return gameStates.get(gameStates.size() - 1).getTeamBPlayer();
