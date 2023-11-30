@@ -1,10 +1,10 @@
-package src.app.listener.client;
+package src.App.listener.client;
 
 import edu.austral.dissis.chess.gui.GameOver;
 import edu.austral.ingsis.clientserver.Message;
 import edu.austral.ingsis.clientserver.MessageListener;
 import org.jetbrains.annotations.NotNull;
-import src.app.service.ClientService;
+import src.App.service.ClientService;
 
 public class GameOverListener implements MessageListener<GameOver> {
 

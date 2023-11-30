@@ -3,7 +3,7 @@ import edu.austral.dissis.chess.gui.*;
 import org.jetbrains.annotations.NotNull;
 import src.adapter.StandardCheckersGameEngineAdapter;
 import src.standardCheckers.board.CheckersBoardFactory;
-import src.standardCheckers.gameMode.CheckersGameModeFactory;
+import src.standardCheckers.gameMode.StandardCheckersGameModeFactory;
 import src.standardCheckers.turnController.CheckersTurnController;
 import src.logic.Player;
 import src.logic.TeamColor;
@@ -18,7 +18,7 @@ import java.util.List;
 
 public class StandardCheckersGameEngine implements GameEngine{
     private final StandardCheckersGameEngineAdapter gameEngineAdapter = new StandardCheckersGameEngineAdapter();
-    private final GameMode gameMode = new CheckersGameModeFactory().internationalCheckers();
+    private final GameMode gameMode = new StandardCheckersGameModeFactory().checkers();
     private final CheckersTurnController turnController = new CheckersTurnController(gameMode);
     private List<GameState> gameStates = new ArrayList<>();
     private final Player playerA = new Player(TeamColor.WHITE);
@@ -52,7 +52,7 @@ public class StandardCheckersGameEngine implements GameEngine{
     @NotNull
     @Override
     public InitialState init() {
-        Board gameBoard = new CheckersBoardFactory().standardCheckersBoard();
+        Board gameBoard = new CheckersBoardFactory().newBoard(playerA.getColor(), playerB.getColor());
         gameStates = gameMode.getInitialState(gameBoard, playerA, playerB, TeamColor.BLACK);
         return new InitialState(gameEngineAdapter.getBoardSize(gameBoard), gameEngineAdapter.getCurrentPieces(gameBoard), gameEngineAdapter.getCurrentTurn(gameStates.get(0)));
     }

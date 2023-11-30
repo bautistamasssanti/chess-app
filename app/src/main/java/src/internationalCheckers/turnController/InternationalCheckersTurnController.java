@@ -13,12 +13,12 @@ import src.logic.moveRules.MoveType;
 
 import java.util.List;
 
-public class CheckersTurnController implements TurnController {
+public class InternationalCheckersTurnController implements TurnController {
     private final GameMode gameMode;
     private final EndGameFactory endGameFactory = new EndGameFactory();
     private final CheckersGameStateFactory checkersGameStateFactory = new CheckersGameStateFactory();
 
-    public CheckersTurnController(GameMode gameMode) {
+    public InternationalCheckersTurnController(GameMode gameMode) {
         this.gameMode = gameMode;
     }
 
@@ -34,16 +34,19 @@ public class CheckersTurnController implements TurnController {
             }
             List<GameState> newGameState = checkersGameStateFactory.movePiece(moveType, origin, destination, gameStates);
             newGameState = gameMode.isBoardStateValid(newGameState);
-            if(gameMode.isGameWonByPlayer(player, newGameState)){
-                return endGameFactory.victoryFactory(player, newGameState);
-            }
-            else if(gameMode.isGameADraw(newGameState)){
-                return endGameFactory.drawFactory(newGameState);
-            }
-            return newGameState;
+            return checkGameStatus(newGameState, player);
         } catch (Exception e) {
             System.out.println(e.getMessage());
             return gameStates;
         }
+    }
+    private List<GameState> checkGameStatus(List<GameState> newGameState, Player player){
+        if(gameMode.isGameWonByPlayer(player, newGameState)){
+            return endGameFactory.victoryFactory(player, newGameState);
+        }
+        else if(gameMode.isGameADraw(newGameState)){
+            return endGameFactory.drawFactory(newGameState);
+        }
+        return newGameState;
     }
 }

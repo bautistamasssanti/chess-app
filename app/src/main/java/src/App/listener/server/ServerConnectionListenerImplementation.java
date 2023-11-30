@@ -1,8 +1,8 @@
-package src.app.listener.server;
+package src.App.listener.server;
 
 import edu.austral.ingsis.clientserver.ServerConnectionListener;
 import org.jetbrains.annotations.NotNull;
-import src.app.service.ServerService;
+import src.App.service.ServerService;
 
 public class ServerConnectionListenerImplementation implements ServerConnectionListener {
 

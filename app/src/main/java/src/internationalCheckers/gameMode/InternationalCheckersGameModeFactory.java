@@ -9,7 +9,7 @@ import src.logic.gameMode.*;
 
 
 
-public class CheckersGameModeFactory {
+public class InternationalCheckersGameModeFactory {
     public GameMode internationalCheckers(){
         DrawCondition[] drawConditions = {new InsuficientMaterial()};
         WinCondition[] winConditions = {new HasPlayerEatenAllOpponentPieces(), new CanOpponentNotMoveAnyPiece()};

@@ -1,4 +1,4 @@
-package src.app;
+package src.App;
 
 import edu.austral.dissis.chess.gui.CachedImageResolver;
 import edu.austral.dissis.chess.gui.DefaultImageResolver;
@@ -7,8 +7,8 @@ import edu.austral.dissis.chess.gui.ImageResolver;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import src.app.listener.client.GameStateListenerImplementation;
-import src.app.service.ClientService;
+import src.App.listener.client.GameStateListenerImplementation;
+import src.App.service.ClientService;
 
 public class ChessApplication extends Application {
     private ImageResolver imageResolver = new CachedImageResolver(new DefaultImageResolver());

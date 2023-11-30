@@ -1,4 +1,4 @@
-package src.app.listener.client;
+package src.App.listener.client;
 
 import edu.austral.ingsis.clientserver.ClientConnectionListener;
 

@@ -2,9 +2,9 @@ package src.internationalCheckers;
 import edu.austral.dissis.chess.gui.*;
 import org.jetbrains.annotations.NotNull;
 import src.adapter.InternationalCheckersGameEngineAdapter;
-import src.internationalCheckers.board.CheckersBoardFactory;
-import src.internationalCheckers.gameMode.CheckersGameModeFactory;
-import src.internationalCheckers.turnController.CheckersTurnController;
+import src.internationalCheckers.board.InternationalCheckersBoardFactory;
+import src.internationalCheckers.gameMode.InternationalCheckersGameModeFactory;
+import src.internationalCheckers.turnController.InternationalCheckersTurnController;
 import src.logic.Player;
 import src.logic.TeamColor;
 import src.logic.Tile;
@@ -18,8 +18,8 @@ import java.util.List;
 
 public class InternationalCheckersGameEngine implements GameEngine{
     private final InternationalCheckersGameEngineAdapter gameEngineAdapter = new InternationalCheckersGameEngineAdapter();
-    private final GameMode gameMode = new CheckersGameModeFactory().internationalCheckers();
-    private final CheckersTurnController turnController = new CheckersTurnController(gameMode);
+    private final GameMode gameMode = new InternationalCheckersGameModeFactory().internationalCheckers();
+    private final InternationalCheckersTurnController turnController = new InternationalCheckersTurnController(gameMode);
     private List<GameState> gameStates = new ArrayList<>();
     private final Player playerA = new Player(TeamColor.WHITE);
     private final Player playerB = new Player(TeamColor.BLACK);
@@ -52,7 +52,7 @@ public class InternationalCheckersGameEngine implements GameEngine{
     @NotNull
     @Override
     public InitialState init() {
-        Board gameBoard = new CheckersBoardFactory().standardCheckersBoard();
+        Board gameBoard = new InternationalCheckersBoardFactory().newBoard(playerA.getColor(), playerB.getColor());
         gameStates = gameMode.getInitialState(gameBoard, playerA, playerB, TeamColor.BLACK);
         return new InitialState(gameEngineAdapter.getBoardSize(gameBoard), gameEngineAdapter.getCurrentPieces(gameBoard), gameEngineAdapter.getCurrentTurn(gameStates.get(0)));
     }

@@ -34,16 +34,19 @@ public class CheckersTurnController implements TurnController {
             }
             List<GameState> newGameState = checkersGameStateFactory.movePiece(moveType, origin, destination, gameStates);
             newGameState = gameMode.isBoardStateValid(newGameState);
-            if(gameMode.isGameWonByPlayer(player, newGameState)){
-                return endGameFactory.victoryFactory(player, newGameState);
-            }
-            else if(gameMode.isGameADraw(newGameState)){
-                return endGameFactory.drawFactory(newGameState);
-            }
-            return newGameState;
+            return checkGameStatus(newGameState, player);
         } catch (Exception e) {
             System.out.println(e.getMessage());
             return gameStates;
         }
+    }
+    private List<GameState> checkGameStatus(List<GameState> newGameState, Player player){
+        if(gameMode.isGameWonByPlayer(player, newGameState)){
+            return endGameFactory.victoryFactory(player, newGameState);
+        }
+        else if(gameMode.isGameADraw(newGameState)){
+            return endGameFactory.drawFactory(newGameState);
+        }
+        return newGameState;
     }
 }

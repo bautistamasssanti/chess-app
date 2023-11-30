@@ -9,8 +9,8 @@ import src.logic.gameMode.*;
 
 
 
-public class CheckersGameModeFactory {
-    public GameMode internationalCheckers(){
+public class StandardCheckersGameModeFactory {
+    public GameMode checkers(){
         DrawCondition[] drawConditions = {new InsuficientMaterial()};
         WinCondition[] winConditions = {new HasPlayerEatenAllOpponentPieces(), new CanOpponentNotMoveAnyPiece()};
         GameRule[] gameRules = {new MoveComplyWithJumpRule()};

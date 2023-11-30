@@ -1,4 +1,4 @@
-package src.app.listener.client;
+package src.App.listener.client;
 
 import edu.austral.dissis.chess.gui.GameStateListener;
 import edu.austral.dissis.chess.gui.GameView;

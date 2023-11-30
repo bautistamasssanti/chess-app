@@ -1,12 +1,12 @@
-package src.app.service;
+package src.App.service;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import edu.austral.dissis.chess.gui.*;
 import edu.austral.ingsis.clientserver.Message;
 import edu.austral.ingsis.clientserver.Server;
 import edu.austral.ingsis.clientserver.netty.server.NettyServerBuilder;
-import src.app.listener.server.GameMoveListener;
-import src.app.listener.server.ServerConnectionListenerImplementation;
+import src.App.listener.server.GameMoveListener;
+import src.App.listener.server.ServerConnectionListenerImplementation;
 
 public class ServerService {
 

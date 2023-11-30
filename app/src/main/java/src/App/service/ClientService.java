@@ -1,4 +1,4 @@
-package src.app.service;
+package src.App.service;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import edu.austral.dissis.chess.gui.*;
@@ -6,7 +6,7 @@ import edu.austral.ingsis.clientserver.Client;
 import edu.austral.ingsis.clientserver.ClientConnectionListener;
 import edu.austral.ingsis.clientserver.Message;
 import edu.austral.ingsis.clientserver.netty.client.NettyClientBuilder;
-import src.app.listener.client.*;
+import src.App.listener.client.*;
 
 import java.net.InetSocketAddress;
 import java.net.SocketAddress;

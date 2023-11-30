@@ -30,23 +30,24 @@ public class ChessTurnController implements TurnController {
                 throw new NotPlayerTurnException();
             }
             MoveType moveType = player.canMovePiece(origin, destination, gameStates);
-
             if(moveType == MoveType.INVALID) {
                 throw new GameRuleUnfullfilledException("Invalid move");
             }
             List<GameState> newGameState = chessGameStateFactory.movePiece(moveType, origin, destination, gameStates);
             newGameState = gameMode.isBoardStateValid(newGameState);
-            if(gameMode.isGameWonByPlayer(player, newGameState)){
-                return endGameFactory.victoryFactory(player, newGameState);
-            }
-            else if(gameMode.isGameADraw(newGameState)){
-                return endGameFactory.drawFactory(newGameState);
-            }
-            return newGameState;
-        }
-        catch (Exception e){
+            return checkGameStatus(newGameState, player);
+        } catch (Exception e){
             System.out.println(e.getMessage());
             return gameStates;
         }
+    }
+    private List<GameState> checkGameStatus(List<GameState> newGameState, Player player){
+        if(gameMode.isGameWonByPlayer(player, newGameState)){
+            return endGameFactory.victoryFactory(player, newGameState);
+        }
+        else if(gameMode.isGameADraw(newGameState)){
+            return endGameFactory.drawFactory(newGameState);
+        }
+        return newGameState;
     }
 }
