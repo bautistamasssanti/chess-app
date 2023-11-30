@@ -1,10 +1,10 @@
 package src.engine;
 
 import edu.austral.dissis.chess.gui.GameEngine;
-import src.adapter.ChessGameEngineAdapter;
-import src.adapter.GameEngineAdapter;
-import src.adapter.InternationalCheckersGameEngineAdapter;
-import src.adapter.StandardCheckersGameEngineAdapter;
+import src.adapter.*;
+import src.capablancaChess.board.CapablancaBoardFactory;
+import src.capablancaChess.gameMode.CapablancaGameModeFactory;
+import src.capablancaChess.turnController.CapablancaTurnController;
 import src.chess.factories.ChessBoardFactory;
 import src.chess.gameMode.ChessGameModeFactory;
 import src.chess.turnController.ChessTurnController;
@@ -47,5 +47,14 @@ public class GameEngineFactory {
         GameEngineAdapter adapter = new InternationalCheckersGameEngineAdapter();
         BoardFactory boardFactory = new InternationalCheckersBoardFactory();
         return new GameEngineImplementation(playerA, playerB,turnController,gameMode,adapter, boardFactory, TeamColor.BLACK);
+    }
+    public GameEngine capablancaChessGameEngine(){
+        Player playerA = new Player(TeamColor.WHITE);
+        Player playerB = new Player(TeamColor.BLACK);
+        GameMode gameMode = new CapablancaGameModeFactory().capablancaChess();
+        TurnController turnController = new CapablancaTurnController(gameMode);
+        GameEngineAdapter adapter = new CapablancaGameEngineAdapter();
+        BoardFactory boardFactory = new CapablancaBoardFactory();
+        return new GameEngineImplementation(playerA, playerB,turnController,gameMode,adapter, boardFactory, TeamColor.WHITE);
     }
 }

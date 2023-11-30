@@ -1,6 +1,6 @@
-package src.chess.gameMode.gameRules;
+package src.capablancaChess.gameMode.gameRules;
 
-import src.chess.factories.ChessGameStateFactory;
+import src.capablancaChess.gameState.CapablancaGameStateFactory;
 import src.logic.Player;
 import src.logic.Tile;
 import src.logic.board.Board;
@@ -12,19 +12,18 @@ import src.logic.piece.PieceType;
 import java.util.List;
 
 public class IsPlayerNotInCheck implements GameRule {
-    private final ChessGameStateFactory chessGameStateFactory = new ChessGameStateFactory();
+    private final CapablancaGameStateFactory capablancaGameStateFactory = new CapablancaGameStateFactory();
     private final Player playerToReview;
 
     public IsPlayerNotInCheck(Player playerToReview) {
         this.playerToReview = playerToReview;
     }
-
     @Override
     public boolean isGameRuleValid(List<GameState> gameStates) {
         Board board = gameStates.get(gameStates.size() - 1).getBoard();
         Tile targetTile = board.getOccupiedTileFromPieceTypeAndColor(PieceType.KING, playerToReview.getColor()).get(0);
         Player opponentPlayer = getOpponentPlayer(gameStates, playerToReview);
-        List<GameState> auxiliarGameStates = chessGameStateFactory.changeTurnColor(opponentPlayer.getColor(), gameStates);
+        List<GameState> auxiliarGameStates = capablancaGameStateFactory.changeTurnColor(opponentPlayer.getColor(), gameStates);
         List<Tile> attackingTiles = board.getTeamTiles(opponentPlayer.getColor());
         for (Tile attackingTile : attackingTiles) {
             if (opponentPlayer.canMovePiece(attackingTile, targetTile, auxiliarGameStates) != MoveType.INVALID) {

@@ -8,4 +8,6 @@ public enum PieceType {
     QUEEN,
     KING,
     MAN,
+    ARCHBISHOP,
+    CHANCELLOR,
 }
