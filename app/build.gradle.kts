@@ -33,8 +33,8 @@ dependencies {
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
     implementation("edu.austral.dissis.chess:chess-ui:2.0.1")
     implementation("edu.austral.dissis.chess:simple-client-server:1.2.0")
-    implementation("org.testng:testng:7.1.0")
-    implementation("junit:junit:4.13.1")
+    implementation("org.testng:testng:7.7.0")
+    implementation("org.junit.jupiter:junit-jupiter:5.8.1")
 }
 
 javafx {
@@ -45,4 +45,10 @@ javafx {
 application {
     // Define the main class for the application.
     mainClass.set("src.App.ChessApplication")
+}
+
+tasks {
+    test {
+        useJUnitPlatform()
+    }
 }
