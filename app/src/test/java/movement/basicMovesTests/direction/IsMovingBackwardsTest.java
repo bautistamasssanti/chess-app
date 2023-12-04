@@ -1,6 +1,6 @@
-package Movement.basicMovesTests.direction;
+package movement.basicMovesTests.direction;
 
-import Movement.BoardParser;
+import movement.BoardParser;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import src.logic.TeamColor;

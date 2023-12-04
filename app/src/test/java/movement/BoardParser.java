@@ -1,4 +1,4 @@
-package Movement;
+package movement;
 
 
 import src.logic.Player;

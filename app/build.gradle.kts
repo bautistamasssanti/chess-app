@@ -10,7 +10,7 @@ group = "edu.austral.dissis.chess"
 version = "1.0.0"
 
 repositories {
-//    mavenLocal()
+    mavenLocal()
     mavenCentral()
     maven {
         url = uri("https://maven.pkg.github.com/austral-ingsis/chess-ui")
@@ -33,7 +33,6 @@ dependencies {
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
     implementation("edu.austral.dissis.chess:chess-ui:2.0.1")
     implementation("edu.austral.dissis.chess:simple-client-server:1.2.0")
-    implementation("org.testng:testng:7.7.0")
     implementation("org.junit.jupiter:junit-jupiter:5.8.1")
 }
 
