@@ -18,14 +18,13 @@ public class IsMovingBackwardsTest {
     Piece black = new Piece(PieceType.PAWN, TeamColor.BLACK, moveRules,1);
     @Test
     public void IsWhiteMovingBackwardsTest() throws Exception {
-        String filepath = "java/Movement/testBoards/basicMoves/direction/IsWhiteMovingBackwards";
+        String filepath = "src/test/java/testBoards/basicMoves/direction/IsWhiteMovingBackwards";
         boolean result = parser.parseChessBoardFormFile(filepath,white,new Tile(3,6));
         Assertions.assertTrue(result);
-
     }
     @Test
     public void IsBlackMovingBackwardsTest() throws Exception {
-        String filepath = "java/Movement/testBoards/basicMoves/direction/IsBlackMovingBackwards";
+        String filepath = "src/test/java/testBoards/basicMoves/direction/IsBlackMovingBackwards";
         boolean result = parser.parseChessBoardFormFile(filepath,black,new Tile(3,1));
         Assertions.assertTrue(result);
     }

@@ -22,6 +22,7 @@ public class BoardParser {
     public boolean parseChessBoardFormFile(String filePath, Piece piece, Tile startingPosition) throws Exception {
         List<String> lines = new ArrayList<>();
         try{
+            new File(filePath);
             File file = new File(filePath);
             if(file.exists()){
                 BufferedReader reader = new BufferedReader(new FileReader(file));

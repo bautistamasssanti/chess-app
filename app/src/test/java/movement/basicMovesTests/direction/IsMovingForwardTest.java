@@ -20,13 +20,13 @@ public class IsMovingForwardTest {
     Piece black = new Piece(PieceType.PAWN, TeamColor.BLACK, moveRules,1);
     @Test
     public void isWhiteMovingForwardTest() throws Exception {
-        String filepath = "java/Movement/testBoards/basicMoves/direction/IsWhiteMovingForward";
+        String filepath = "src/test/java/testBoards/basicMoves/direction/IsWhiteMovingForward";
         boolean result = parser.parseChessBoardFormFile(filepath,white,new Tile(3,1));
         assertTrue(result);
     }
     @Test
     public void isBlackMovingForwardTest() throws Exception {
-        String filepath = "kotlin/Movement/testBoards/basicMoves/direction/IsBlackMovingForward";
+        String filepath = "src/test/java/testBoards/basicMoves/direction/IsBlackMovingForward";
         boolean result = parser.parseChessBoardFormFile(filepath,black,new Tile(3,6));
         assertTrue(result);
     }
