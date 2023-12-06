@@ -8,9 +8,6 @@ import javafx.application.Application
 import javafx.application.Application.launch
 import javafx.scene.Scene
 import javafx.stage.Stage
-import src.chess.ChessGameEngine
-import src.internationalCheckers.InternationalCheckersGameEngine
-import src.standardCheckers.StandardCheckersGameEngine
 
 
 fun main() {
@@ -18,9 +15,6 @@ fun main() {
 }
 
 class ChessGameApplication : Application() {
-    private val internationalCheckersGameEngine = InternationalCheckersGameEngine()
-    private val standardCheckersGameEngine = StandardCheckersGameEngine()
-    private val chessGameEngine = ChessGameEngine()
     private val gameEngine = SimpleGameEngine()
     private val imageResolver = CachedImageResolver(DefaultImageResolver())
 
@@ -31,10 +25,7 @@ class ChessGameApplication : Application() {
     override fun start(primaryStage: Stage) {
         primaryStage.title = GameTitle
 
-        //val root = createGameViewFrom(internationalCheckersGameEngine, imageResolver)
-        val root = createGameViewFrom(internationalCheckersGameEngine, imageResolver)
-        //val root = GameView(chessGameEngine, imageResolver)
-        //val root = GameView(gameEngine, imageResolver)
+        val root = createGameViewFrom(gameEngine, imageResolver)
         primaryStage.scene = Scene(root)
 
         primaryStage.show()

@@ -19,7 +19,7 @@ public class Board {
     public Map<Tile, Piece> getBoard() {
         return board;
     }
-    public List<Tile> getOccupiedTileFromPieceTypeAndColor(PieceType pieceType, TeamColor teamColor){
+    public List<Tile> getOccupiedTilesFromPieceTypeAndColor(PieceType pieceType, TeamColor teamColor){
         List<Tile> list = new ArrayList<>();
         for (Map.Entry<Tile, Piece> entry : board.entrySet()) {
             if(entry.getValue().getType().equals(pieceType) && entry.getValue().getColor().equals(teamColor)){
@@ -49,6 +49,9 @@ public class Board {
             putAll(board);
         }};
 
+    }
+    public Piece getPiece(Tile tile){
+        return board.get(tile);
     }
 
     public int getWidth() {

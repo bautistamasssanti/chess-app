@@ -2,23 +2,23 @@ package src.engine;
 
 import edu.austral.dissis.chess.gui.GameEngine;
 import src.adapter.*;
-import src.capablancaChess.board.CapablancaBoardFactory;
-import src.capablancaChess.gameMode.CapablancaGameModeFactory;
-import src.capablancaChess.turnController.CapablancaTurnController;
-import src.chess.factories.ChessBoardFactory;
-import src.chess.gameMode.ChessGameModeFactory;
-import src.chess.turnController.ChessTurnController;
-import src.internationalCheckers.board.InternationalCheckersBoardFactory;
-import src.internationalCheckers.gameMode.InternationalCheckersGameModeFactory;
-import src.internationalCheckers.turnController.InternationalCheckersTurnController;
+import src.chessGames.capablancaChess.board.CapablancaBoardFactory;
+import src.chessGames.capablancaChess.gameMode.CapablancaGameModeFactory;
+import src.chessGames.capablancaChess.turnController.CapablancaTurnController;
+import src.chessGames.chess.board.ChessBoardFactory;
+import src.chessGames.chess.gameMode.ChessGameModeFactory;
+import src.chessGames.chess.turnController.ChessTurnController;
+import src.checkersGames.internationalCheckers.board.InternationalCheckersBoardFactory;
+import src.checkersGames.internationalCheckers.gameMode.InternationalCheckersGameModeFactory;
+import src.checkersGames.internationalCheckers.turnController.InternationalCheckersTurnController;
 import src.logic.Player;
 import src.logic.TeamColor;
 import src.logic.TurnController.TurnController;
 import src.logic.board.BoardFactory;
 import src.logic.gameMode.GameMode;
-import src.standardCheckers.board.CheckersBoardFactory;
-import src.standardCheckers.gameMode.StandardCheckersGameModeFactory;
-import src.standardCheckers.turnController.CheckersTurnController;
+import src.checkersGames.standardCheckers.board.CheckersBoardFactory;
+import src.checkersGames.standardCheckers.gameMode.StandardCheckersGameModeFactory;
+import src.checkersGames.standardCheckers.turnController.CheckersTurnController;
 
 public class GameEngineFactory {
     public GameEngine chessGameEngine(){

@@ -74,7 +74,7 @@ public class GameModeImplementation implements GameMode{
     private List<GameState> getGameStateToCheck(List<GameState> initialState){
         List<GameState> stateToCheck = initialState;
         for (OptionalGameRule optionalGameRule : optionalGameRules) {
-            stateToCheck = optionalGameRule.isOptionalConditionulfilled(stateToCheck);
+            stateToCheck = optionalGameRule.isOptionalConditionfulfilled(stateToCheck);
         }
         return stateToCheck;
     }

@@ -5,5 +5,5 @@ import src.logic.gameState.GameState;
 import java.util.List;
 
 public interface OptionalGameRule {
-    List<GameState> isOptionalConditionulfilled(List<GameState> gameStates);
+    List<GameState> isOptionalConditionfulfilled(List<GameState> gameStates);
 }
