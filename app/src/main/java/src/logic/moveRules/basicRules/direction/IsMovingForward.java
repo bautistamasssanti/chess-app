@@ -17,6 +17,7 @@ public class IsMovingForward implements MoveRule {
             if(destination.getY() > origin.getY()){
                 return MoveType.BASIC;
             }
+
             return MoveType.INVALID;
         } else {
             if(destination.getY() < origin.getY()){

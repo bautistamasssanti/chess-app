@@ -28,11 +28,11 @@ public class CastledQueensideRule implements MoveRule {
         }
     }
     private boolean checkConditions(Tile origin, Tile destination, List<GameState> gameStates){
-        if(!checkValidCoordinates(origin, destination, gameStates))
+        if(!checkValidCoordinates(origin, destination))
             return false;
         Board board = gameStates.get(gameStates.size() - 1).getBoard();
         Tile castlingPieceTile = new Tile(0, origin.getY());
-        Piece castlingPiece = board.getBoard().get(castlingPieceTile);
+        Piece castlingPiece = board.getPiece(castlingPieceTile);
         if(!castlingPiece.getType().equals(ROOK))
             return false;
         if(!checkPiecesWithoutMovement(origin, castlingPieceTile, destination, gameStates))
@@ -41,7 +41,7 @@ public class CastledQueensideRule implements MoveRule {
             return false;
         return true;
     }
-    private boolean checkValidCoordinates(Tile origin, Tile destination, List<GameState> gameStates){
+    private boolean checkValidCoordinates(Tile origin, Tile destination){
         if(origin.getY() != destination.getY()){
             return false;
         }

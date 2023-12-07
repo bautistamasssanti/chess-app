@@ -32,7 +32,7 @@ public class CastledKingsideRule implements MoveRule {
             return false;
         Board board = gameStates.get(gameStates.size() - 1).getBoard();
         Tile castlingPieceTile = new Tile(board.getWidth() - 1, origin.getY());
-        Piece castlingPiece = board.getBoard().get(castlingPieceTile);
+        Piece castlingPiece = board.getPiece(castlingPieceTile);
         if(!castlingPiece.getType().equals(ROOK))
             return false;
         if(!checkPiecesWithoutMovement(origin, castlingPieceTile, destination, gameStates))

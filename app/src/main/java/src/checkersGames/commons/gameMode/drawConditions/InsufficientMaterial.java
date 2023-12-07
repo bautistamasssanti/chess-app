@@ -9,7 +9,7 @@ import src.logic.piece.PieceType;
 
 import java.util.List;
 
-public class InsuficientMaterial implements DrawCondition {
+public class InsufficientMaterial implements DrawCondition {
     @Override
     public boolean isGameADraw(List<GameState> gameStates) {
         Board currentBoard = gameStates.get(gameStates.size()-1).getBoard();
@@ -26,10 +26,10 @@ public class InsuficientMaterial implements DrawCondition {
         if(playerBTiles.size() != 1){
             return false;
         }
-        if(board.getBoard().get(playerATiles.get(0)).getType() != PieceType.QUEEN){
+        if(board.getPiece(playerATiles.get(0)).getType() != PieceType.QUEEN){
             return false;
         }
-        if(board.getBoard().get(playerBTiles.get(0)).getType() != PieceType.QUEEN){
+        if(board.getPiece(playerBTiles.get(0)).getType() != PieceType.QUEEN){
             return false;
         }
         return true;

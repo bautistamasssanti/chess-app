@@ -59,12 +59,33 @@ public class CheckersGameStateFactory {
         return Collections.unmodifiableList(newHistory);
     }
     private Tile getTileBeforeDestination(Tile origin, Tile destination){
-        if (arithmethicOperation.getXMovement(origin, destination) > 0 && arithmethicOperation.getYMovement(origin, destination) > 0) {
+        if (getTileBeforeDestinationFirstCondition(origin, destination)) {
             return new Tile(destination.getX() - 1, destination.getY() - 1);
-        } else if (arithmethicOperation.getXMovement(origin, destination) > 0 && arithmethicOperation.getYMovement(origin, destination) < 0) {
+        } else if (getTileBeforeDestinationSecondCondition(origin, destination)) {
             return new Tile(destination.getX() - 1, destination.getY() + 1);
-        } else if (arithmethicOperation.getXMovement(origin, destination) < 0 && arithmethicOperation.getYMovement(origin, destination) > 0) {
+        } else if (getTileBeforeDestinationThirdCondition(origin, destination)) {
             return new Tile(destination.getX() + 1, destination.getY() - 1);
         } else return new Tile(destination.getX() + 1, destination.getY() + 1);
+    }
+    private boolean getTileBeforeDestinationFirstCondition(Tile origin, Tile destination){
+        if(arithmethicOperation.getXMovement(origin, destination) > 0){
+            if(arithmethicOperation.getYMovement(origin, destination) > 0)
+                return true;
+        }
+        return false;
+    }
+    private boolean getTileBeforeDestinationSecondCondition(Tile origin, Tile destination){
+        if(arithmethicOperation.getXMovement(origin, destination) > 0){
+            if(arithmethicOperation.getYMovement(origin, destination) < 0)
+                return true;
+        }
+        return false;
+    }
+    private boolean getTileBeforeDestinationThirdCondition(Tile origin, Tile destination){
+        if(arithmethicOperation.getXMovement(origin, destination) < 0){
+            if(arithmethicOperation.getYMovement(origin, destination) > 0)
+                return true;
+        }
+        return false;
     }
 }

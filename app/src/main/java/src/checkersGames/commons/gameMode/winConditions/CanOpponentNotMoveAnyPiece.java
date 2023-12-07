@@ -24,7 +24,8 @@ public class CanOpponentNotMoveAnyPiece implements WinCondition {
         return gameStates.get(0).getTeamAPlayer();
     }
     private List<GameState> switchTurn(List<GameState> gameStates, TeamColor colorToSwitch){
-        GameState newGameState = new GameState(gameStates.get(gameStates.size() - 1).getBoard(), gameStates.get(gameStates.size() - 1).getGameStatus(), gameStates.get(gameStates.size() - 1).getTeamAPlayer(), gameStates.get(gameStates.size() - 1).getTeamBPlayer(), colorToSwitch);
+        GameState currentState = gameStates.get(gameStates.size() - 1);
+        GameState newGameState = new GameState(currentState.getBoard(), currentState.getGameStatus(), currentState.getTeamAPlayer(), currentState.getTeamBPlayer(), colorToSwitch);
         List<GameState> newHistory = new ArrayList<>(gameStates.subList(0, gameStates.size() - 1));
         newHistory.add(newHistory.size(), newGameState);
         return Collections.unmodifiableList(newHistory);

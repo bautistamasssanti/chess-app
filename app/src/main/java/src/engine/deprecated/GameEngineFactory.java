@@ -1,4 +1,4 @@
-package src.engine;
+package src.engine.deprecated;
 
 import edu.austral.dissis.chess.gui.GameEngine;
 import src.adapter.*;

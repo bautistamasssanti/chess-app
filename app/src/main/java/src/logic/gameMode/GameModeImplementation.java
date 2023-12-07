@@ -37,7 +37,6 @@ public class GameModeImplementation implements GameMode{
 
     @Override
     public boolean isGameWonByPlayer(Player player, List<GameState> gameStates) {
-
         for (WinCondition winCondition : winConditions) {
             if (winCondition.isGameWonByPlayer(player, gameStates)) {
 
@@ -61,6 +60,7 @@ public class GameModeImplementation implements GameMode{
     private void areGameRulesValid(List<GameState> gameStates) throws GameRuleUnfullfilledException {
         for (GameRule gameRule : gameRules) {
             if (!gameRule.isGameRuleValid(gameStates)) {
+                System.out.println(gameRule.getGameRuleName());
                 throw new GameRuleUnfullfilledException(gameRule.getGameRuleName());
             }
         }
@@ -68,8 +68,6 @@ public class GameModeImplementation implements GameMode{
     private List<GameState> getPreviousState(List<GameState> gameStates){
         return new ArrayList<>(gameStates.subList(0, gameStates.size() - 1));
     }
-
-
 
     private List<GameState> getGameStateToCheck(List<GameState> initialState){
         List<GameState> stateToCheck = initialState;

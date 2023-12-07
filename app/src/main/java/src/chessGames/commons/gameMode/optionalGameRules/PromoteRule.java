@@ -5,7 +5,6 @@ import src.logic.Tile;
 import src.logic.board.Board;
 import src.logic.gameMode.OptionalGameRule;
 import src.logic.gameState.GameState;
-import src.chessGames.chess.gameState.ChessGameStateFactory;
 import src.logic.piece.Piece;
 import src.logic.piece.PieceType;
 
@@ -30,7 +29,7 @@ public class PromoteRule implements OptionalGameRule {
         List<GameState> currentStates = gameStates;
         List<Tile> occupiedTiles = currentStates.get(currentStates.size() - 1).getBoard().getOccupiedTiles();
         for (Tile occupiedTile : occupiedTiles) {
-            Piece piece = currentStates.get(currentStates.size() - 1).getBoard().getBoard().get(occupiedTile);
+            Piece piece = currentStates.get(currentStates.size() - 1).getBoard().getPiece(occupiedTile);
             if (checksConditions(currentStates, occupiedTile, piece)) {
                 currentStates = promotePiece(occupiedTile, currentStates, transformTo);
             }
@@ -49,7 +48,7 @@ public class PromoteRule implements OptionalGameRule {
 
     private boolean hasPieceReachedOtherSide(Tile toAnalize, List<GameState> gameStates) {
         GameState gameState = gameStates.get(gameStates.size() - 1);
-        if (gameState.getBoard().getBoard().get(toAnalize).getColor() == gameState.getTeamAPlayer().getColor()) {
+        if (gameState.getBoard().getPiece(toAnalize).getColor() == gameState.getTeamAPlayer().getColor()) {
             return toAnalize.getY() == gameState.getBoard().getLength() - 1;
         } else {
             return toAnalize.getY() == 0;

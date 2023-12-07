@@ -15,7 +15,6 @@ import java.util.List;
 
 public class CheckersTurnController implements TurnController {
     private final GameMode gameMode;
-    private final EndGameFactory endGameFactory = new EndGameFactory();
     private final CheckersGameStateFactory checkersGameStateFactory = new CheckersGameStateFactory();
 
     public CheckersTurnController(GameMode gameMode) {
@@ -25,28 +24,17 @@ public class CheckersTurnController implements TurnController {
     @Override
     public List<GameState> applyMove(Player player, Tile origin, Tile destination, List<GameState> gameStates) {
         try{
-            if (player.getColor() != gameStates.get(gameStates.size() - 1).getCurrentTurnPlayer().getColor()) {
+            if (player.getColor() != gameStates.get(gameStates.size() - 1).getCurrentTurnPlayer().getColor())
                 throw new NotPlayerTurnException();
-            }
             MoveType moveType = player.canMovePiece(origin, destination, gameStates);
-            if(moveType == MoveType.INVALID) {
+            if(moveType == MoveType.INVALID)
                 throw new GameRuleUnfullfilledException("Invalid move");
-            }
             List<GameState> newGameState = checkersGameStateFactory.movePiece(moveType, origin, destination, gameStates);
             newGameState = gameMode.isBoardStateValid(newGameState);
-            return checkGameStatus(newGameState, player);
+            return newGameState;
         } catch (Exception e) {
             System.out.println(e.getMessage());
             return gameStates;
         }
-    }
-    private List<GameState> checkGameStatus(List<GameState> newGameState, Player player){
-        if(gameMode.isGameWonByPlayer(player, newGameState)){
-            return endGameFactory.victoryFactory(player, newGameState);
-        }
-        else if(gameMode.isGameADraw(newGameState)){
-            return endGameFactory.drawFactory(newGameState);
-        }
-        return newGameState;
     }
 }

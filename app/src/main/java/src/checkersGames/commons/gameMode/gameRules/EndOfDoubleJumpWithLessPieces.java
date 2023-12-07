@@ -8,24 +8,23 @@ import src.logic.gameState.GameState;
 
 import java.util.List;
 
-public class MoveComplyWithJumpRule implements GameRule {
-
+public class EndOfDoubleJumpWithLessPieces implements GameRule {
     @Override
     public boolean isGameRuleValid(List<GameState> gameStates) {
-        TeamColor currentTurnColor = gameStates.get(gameStates.size() - 1).getColorTurn();
-        TeamColor previousTurnColor = gameStates.get(gameStates.size() - 2).getColorTurn();
-        if(areTeamColorEquals(currentTurnColor, previousTurnColor)){
-            return isPreviousTurnOpponentWithLessPieces(gameStates, currentTurnColor);
-        }
+        if(gameStates.size() < 3)
+            return true;
+        GameState currentState = gameStates.get(gameStates.size() - 1);
+        GameState previousState = gameStates.get(gameStates.size() - 2);
+        GameState previousPreviousState = gameStates.get(gameStates.size() - 3);
+        if(currentState.getColorTurn() != previousState.getColorTurn())
+            if(previousState.getColorTurn() == previousPreviousState.getColorTurn())
+                return isPreviousTurnOpponentWithLessPieces(gameStates, previousState.getColorTurn());
         return true;
     }
-    private boolean areTeamColorEquals(TeamColor currentTurnColor, TeamColor previousTurnColor){
-        return currentTurnColor == previousTurnColor;
-    }
-    private boolean isPreviousTurnOpponentWithLessPieces(List<GameState> gameStates, TeamColor currentTurnColor){
+    private boolean isPreviousTurnOpponentWithLessPieces(List<GameState> gameStates, TeamColor color){
         Board currentBoard = gameStates.get(gameStates.size() - 1).getBoard();
         Board previousBoard = gameStates.get(gameStates.size() - 2).getBoard();
-        TeamColor opponentColor = getOpponentColor(currentTurnColor, gameStates);
+        TeamColor opponentColor = getOpponentColor(color, gameStates);
         List<Tile> currentOpponentTiles = currentBoard.getTeamTiles(opponentColor);
         List<Tile> previousOpponentTiles = previousBoard.getTeamTiles(opponentColor);
         return currentOpponentTiles.size() < previousOpponentTiles.size();
@@ -41,6 +40,6 @@ public class MoveComplyWithJumpRule implements GameRule {
 
     @Override
     public String getGameRuleName() {
-        return "MoveComplyWithJumpRule";
+        return "EndOfDoubleJumpWithLessPieces";
     }
 }

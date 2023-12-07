@@ -13,7 +13,7 @@ public class IsRivalPieceNotInDestination implements MoveRule {
     @Override
     public MoveType isValidMove(Tile origin, Tile destination, List<GameState> gameStates) {
         Board board = gameStates.get(gameStates.size() - 1).getBoard();
-        if(!board.getBoard().containsKey(destination)){
+        if(!board.containsPieceInTile(destination)){
             return MoveType.BASIC;
         }
         if(getPieceColor(origin,board) != getPieceColor(destination,board)){
@@ -22,6 +22,6 @@ public class IsRivalPieceNotInDestination implements MoveRule {
         return MoveType.INVALID;
     }
     private TeamColor getPieceColor(Tile tile, Board board){
-        return board.getBoard().get(tile).getColor();
+        return board.getPiece(tile).getColor();
     }
 }

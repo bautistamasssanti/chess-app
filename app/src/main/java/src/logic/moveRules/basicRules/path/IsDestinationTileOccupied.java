@@ -12,7 +12,7 @@ public class IsDestinationTileOccupied implements MoveRule {
     @Override
     public MoveType isValidMove(Tile origin, Tile destination, List<GameState> gameStates) {
         Board board = gameStates.get(gameStates.size() - 1).getBoard();
-        if(board.getBoard().containsKey(destination)){
+        if(board.containsPieceInTile(destination)){
             return MoveType.BASIC;
         }
         return MoveType.INVALID;

@@ -4,7 +4,6 @@ import edu.austral.dissis.chess.gui.*;
 import src.logic.TeamColor;
 import src.logic.Tile;
 import src.logic.board.Board;
-import src.adapter.GameEngineAdapter;
 import src.logic.gameState.GameState;
 import src.logic.piece.Piece;
 import src.logic.piece.PieceType;
@@ -23,7 +22,7 @@ public class StandardCheckersGameEngineAdapter implements GameEngineAdapter {
         List<Tile> occupiedTiles = board.getOccupiedTiles();
         List<ChessPiece> chessPieces = new ArrayList<>();
         for (Tile occupiedTile : occupiedTiles) {
-            Piece piece = board.getBoard().get(occupiedTile);
+            Piece piece = board.getPiece(occupiedTile);
             chessPieces.add(new ChessPiece(String.valueOf(piece.getId()), adaptPlayerColor(piece.getColor()), adaptPosition(occupiedTile), adaptPieceType(piece.getType())));
         }
         return chessPieces;

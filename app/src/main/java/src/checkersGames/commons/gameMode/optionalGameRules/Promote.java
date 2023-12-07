@@ -43,29 +43,42 @@ public class Promote implements OptionalGameRule {
         return currentStates;
     }
     private boolean checkCondition(List<GameState> currentStates, Tile occupiedTile, @NotNull Piece piece){
-        if (piece.getType() == PieceType.MAN) {
-            if (occupiedTile.getY() == 0) {
-                if (hasPieceMoved(occupiedTile, currentStates)) {
-                    return true;
-                }
+        try{
+            if (piece.getType() == PieceType.MAN) {
+                if(hasTileReachedItsOwnSideLimit(occupiedTile, piece, currentStates))
+                    return false;
+                return hasTileReachedSideLimit(occupiedTile, currentStates);
             }
-            if (occupiedTile.getY() == currentStates.get(currentStates.size() - 1).getBoard().getLength() - 1) {
-                if (hasPieceMoved(occupiedTile, currentStates)) {
-                    return true;
-                }
-            }
+            return false;
+        }catch (Exception e){
+            System.out.println("Error: " + e.getMessage());
+            return false;
         }
-        return false;
     }
-    private boolean hasPieceMoved(Tile toAnalize, @NotNull List<GameState> gameStates){
-        Board currentBoard = gameStates.get(gameStates.size() - 1).getBoard();
-        for (GameState gameState: gameStates) {
-            if(gameState.getBoard().getPiece(toAnalize).getId() != currentBoard.getBoard().get(toAnalize).getId()){
+    private boolean hasTileReachedItsOwnSideLimit(Tile toAnalise,@NotNull Piece piece, List<GameState> gameStates){
+        try{
+            Board originalBoard = gameStates.get(0).getBoard();
+            Tile pieceOriginalTile = originalBoard.getTileFromPieceId(piece.getId());
+            if(pieceOriginalTile.getY() <= originalBoard.getLength()/2){
+                return toAnalise.getY() == 0;
+            } else
+                return toAnalise.getY() == originalBoard.getLength() - 1;
+        }catch (Exception e){
+            System.out.println("Error: " + e.getMessage());
+            return false;
+        }
+
+    }
+    private boolean hasTileReachedSideLimit(Tile occupiedTile, List<GameState> currentStates){
+        if (occupiedTile.getY() == 0) {
                 return true;
-            }
+        }
+        if (occupiedTile.getY() == currentStates.get(currentStates.size() - 1).getBoard().getLength() - 1) {
+                return true;
         }
         return false;
     }
+
     private List<GameState> promotePiece(Tile originalTile, @NotNull List<GameState> gameStates, PieceType transformTo){
         GameState originalGameState = gameStates.get(gameStates.size() - 1);
         List<GameState> newHistory = new ArrayList<>(gameStates.subList(0, gameStates.size() - 1)) ;

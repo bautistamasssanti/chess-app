@@ -19,12 +19,12 @@ public class IsDestinationFreeOfTeamPiece implements MoveRule {
         return MoveType.INVALID;
     }
     private boolean checksConditions(Tile origin, Tile destination, Board board){
-        if (!board.getBoard().containsKey(destination)) {
+        if (!board.containsPieceInTile(destination)) {
             return true;
         }
-        if(board.getBoard().containsKey(origin)){
-            TeamColor originColor = board.getBoard().get(origin).getColor();
-            TeamColor destinationColor = board.getBoard().get(destination).getColor();
+        if(board.containsPieceInTile(origin)){
+            TeamColor originColor = board.getPiece(origin).getColor();
+            TeamColor destinationColor = board.getPiece(destination).getColor();
             return originColor != destinationColor;
         }
         return false;

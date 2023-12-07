@@ -48,10 +48,20 @@ public class Board {
         return new HashMap<>() {{
             putAll(board);
         }};
-
     }
     public Piece getPiece(Tile tile){
         return board.get(tile);
+    }
+    public Tile getTileFromPieceId(int id){
+        for (Map.Entry<Tile, Piece> entry : board.entrySet()) {
+            if(entry.getValue().getId() == id){
+                return entry.getKey();
+            }
+        }
+        throw new IllegalArgumentException("Piece with id " + id + " not found");
+    }
+    public boolean containsPieceInTile(Tile tile){
+        return board.containsKey(tile);
     }
 
     public int getWidth() {

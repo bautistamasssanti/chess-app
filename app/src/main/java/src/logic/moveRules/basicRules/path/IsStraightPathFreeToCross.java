@@ -29,7 +29,7 @@ public class IsStraightPathFreeToCross implements MoveRule {
     }
     private MoveType rightChecker(Tile origin, Tile destination, Board board){
         for(int x = origin.getX() + 1; x < destination.getX(); x++){
-            if(board.getBoard().containsKey(new Tile(x, origin.getY()))){
+            if(board.containsPieceInTile(new Tile(x, origin.getY()))){
                 return MoveType.INVALID;
             }
         }
@@ -37,7 +37,7 @@ public class IsStraightPathFreeToCross implements MoveRule {
     }
     private MoveType leftChecker(Tile origin, Tile destination, Board board){
         for(int x = origin.getX() - 1; x > destination.getX(); x--){
-            if(board.getBoard().containsKey(new Tile(x, origin.getY()))){
+            if(board.containsPieceInTile(new Tile(x, origin.getY()))){
                 return MoveType.INVALID;
             }
         }
@@ -45,7 +45,7 @@ public class IsStraightPathFreeToCross implements MoveRule {
     }
     private MoveType upwardsChecker(Tile origin, Tile destination, Board board){
         for(int y = origin.getY() + 1; y < destination.getY(); y++){
-            if(board.getBoard().containsKey(new Tile(origin.getX(), y))){
+            if(board.containsPieceInTile(new Tile(origin.getX(), y))){
                 return MoveType.INVALID;
             }
         }
@@ -53,7 +53,7 @@ public class IsStraightPathFreeToCross implements MoveRule {
     }
     private MoveType downwardsChecker(Tile origin, Tile destination, Board board){
         for(int y = origin.getY() - 1; y > destination.getY(); y--){
-            if(board.getBoard().containsKey(new Tile(origin.getX(), y))){
+            if(board.containsPieceInTile(new Tile(origin.getX(), y))){
                 return MoveType.INVALID;
             }
         }

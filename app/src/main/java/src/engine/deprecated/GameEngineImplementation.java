@@ -1,4 +1,4 @@
-package src.engine;
+package src.engine.deprecated;
 
 import edu.austral.dissis.chess.gui.*;
 import org.jetbrains.annotations.NotNull;
@@ -49,7 +49,6 @@ public class GameEngineImplementation implements GameEngine {
             return gameOver();
         }
         return new NewGameState(engineAdapter.getCurrentPieces(gameStates.get(gameStates.size()-1).getBoard()), engineAdapter.getCurrentTurn(gameStates.get(gameStates.size()-1)));
-
     }
     private GameOver gameOver(){
         if(gameStates.get(gameStates.size()-1).getGameStatus() == GameStatus.TeamAWon){

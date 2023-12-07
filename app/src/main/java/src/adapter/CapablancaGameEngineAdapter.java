@@ -22,7 +22,7 @@ public class CapablancaGameEngineAdapter implements GameEngineAdapter{
         List<Tile> occupiedTiles = board.getOccupiedTiles();
         List<ChessPiece> chessPieces = new ArrayList<>();
         for (Tile occupiedTile : occupiedTiles) {
-            Piece piece = board.getBoard().get(occupiedTile);
+            Piece piece = board.getPiece(occupiedTile);
             chessPieces.add(new ChessPiece(String.valueOf(piece.getId()), adaptPlayerColor(piece.getColor()), adaptPosition(occupiedTile), adaptPieceType(piece.getType())));
         }
         return chessPieces;

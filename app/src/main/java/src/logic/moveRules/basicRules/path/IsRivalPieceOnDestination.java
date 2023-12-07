@@ -14,8 +14,8 @@ public class IsRivalPieceOnDestination implements MoveRule {
     public MoveType isValidMove(Tile origin, Tile destination, List<GameState> gameStates) {
         Board board = gameStates.get(gameStates.size() - 1).getBoard();
         try {
-            TeamColor originColor = board.getBoard().get(origin).getColor();
-            TeamColor destinationColor = board.getBoard().get(destination).getColor();
+            TeamColor originColor = board.getPiece(origin).getColor();
+            TeamColor destinationColor = board.getPiece(destination).getColor();
             if(originColor != destinationColor){
                 return MoveType.BASIC;
             }

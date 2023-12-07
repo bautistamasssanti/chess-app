@@ -5,26 +5,29 @@ import src.logic.gameState.GameState;
 import src.logic.gameState.GameStatus;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class EndGameFactory {
     public List<GameState> victoryFactory(Player player, List<GameState> gameStates){
         GameStatus gameStatus = GameStatus.InProgress;
-        if(player.getColor() == gameStates.get(gameStates.size() - 1).getTeamAPlayer().getColor()){
+        GameState previousGameState = gameStates.get(gameStates.size() - 1);
+        if(player.getColor() == previousGameState.getTeamAPlayer().getColor()){
             gameStatus = GameStatus.TeamAWon;
         }
-        else if(player.getColor() == gameStates.get(gameStates.size() - 1).getTeamBPlayer().getColor()){
+        else if(player.getColor() == previousGameState.getTeamBPlayer().getColor()){
             gameStatus = GameStatus.TeamBWon;
         }
-        GameState gameState = new GameState(gameStates.get(gameStates.size() - 1).getBoard(), gameStatus, gameStates.get(gameStates.size() - 1).getTeamAPlayer(), gameStates.get(gameStates.size() - 1).getTeamBPlayer(), gameStates.get(gameStates.size() - 1).getColorTurn());
+        GameState gameState = new GameState(previousGameState.getBoard(), gameStatus, previousGameState.getTeamAPlayer(), previousGameState.getTeamBPlayer(), previousGameState.getColorTurn());
         List<GameState> updatedGameStates = new ArrayList<>(gameStates.subList(0, gameStates.size() - 1));
         updatedGameStates.add(gameState);
-        return updatedGameStates;
+        return Collections.unmodifiableList(updatedGameStates);
     }
     public List<GameState> drawFactory(List<GameState> gameStates){
-        GameState gameState = new GameState(gameStates.get(gameStates.size() - 1).getBoard(), GameStatus.Draw, gameStates.get(gameStates.size() - 1).getTeamAPlayer(), gameStates.get(gameStates.size() - 1).getTeamBPlayer(), gameStates.get(gameStates.size() - 1).getColorTurn());
+        GameState previousGameState = gameStates.get(gameStates.size() - 1);
+        GameState gameState = new GameState(previousGameState.getBoard(), GameStatus.Draw, previousGameState.getTeamAPlayer(), previousGameState.getTeamBPlayer(), previousGameState.getColorTurn());
         List<GameState> updatedGameStates = new ArrayList<>(gameStates.subList(0, gameStates.size() - 1));
         updatedGameStates.add(gameState);
-        return updatedGameStates;
+        return Collections.unmodifiableList(updatedGameStates);
     }
 }

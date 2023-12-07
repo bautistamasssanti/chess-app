@@ -20,10 +20,17 @@ public class Tile {
     public boolean equals(Object obj) {
         if (this == obj)
             return true;
-        if (obj == null || getClass() != obj.getClass())
+        if (obj == null)
+            return false;
+        if(getClass() != obj.getClass())
             return false;
         Tile other = (Tile) obj;
-        return x == other.x && y == other.y;
+        if (x == other.x) {
+            if (y == other.y) {
+                return true;
+            }
+        }
+        return false;
     }
     public int getX() {
         return x;
